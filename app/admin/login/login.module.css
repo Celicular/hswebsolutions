@@ -1,0 +1,127 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1.5rem;
+  background-color: #F9F9F9;
+}
+
+.loginBox {
+  width: 100%;
+  max-width: 420px;
+  padding: 2.5rem;
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.logo h1 {
+  font-size: 2.2rem;
+  color: #333333;
+  margin: 0;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+
+.logo h1:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background-color: #4CAF50;
+  border-radius: 3px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  font-size: 1rem;
+  background-color: #FFFFFF;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+  color: #333333;
+}
+
+.input:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.input::placeholder {
+  color: #757575;
+}
+
+.button {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: white;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.2);
+}
+
+.button:hover {
+  background-color: #45A049;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.25);
+}
+
+.button:disabled {
+  background-color: #A5D6A7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.error {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #D32F2F;
+  background-color: #FFEBEE;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  border-left: 4px solid #D32F2F;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 480px) {
+  .loginBox {
+    padding: 2rem;
+  }
+  
+  .input, .button {
+    padding: 0.9rem;
+  }
+  
+  .logo h1 {
+    font-size: 2rem;
+  }
+} 

@@ -1,0 +1,340 @@
+.featuresSection {
+  padding: 5rem 1rem;
+  background-color: var(--background-darker, #0a0a19);
+  position: relative;
+  overflow: hidden;
+}
+
+:global(.light-mode) .featuresSection {
+  background-color: var(--background-light, #f5f5fa);
+}
+
+.container {
+  max-width: 1340px;
+  margin: 0 auto;
+  will-change: contents;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--foreground, #ffffff);
+  position: relative;
+  display: inline-block;
+}
+
+:global(.light-mode) .sectionTitle {
+  color: var(--foreground-light, #121212);
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #673AB7, #00B0A3);
+  border-radius: 2px;
+}
+
+.sectionSubtitle {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 1.5rem auto 0;
+  color: var(--foreground-muted, rgba(255, 255, 255, 0.8));
+  line-height: 1.6;
+}
+
+:global(.light-mode) .sectionSubtitle {
+  color: var(--foreground-light-muted, rgba(18, 18, 18, 0.8));
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  perspective: 1000px;
+  padding: 10px 0;
+}
+
+.featureCard {
+  background-color: var(--card-bg, rgba(30, 30, 40, 0.6));
+  border-radius: 16px;
+  padding: 2.5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform-style: preserve-3d;
+  transition: all 0.3s ease-out;
+  z-index: 1;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  will-change: transform, box-shadow;
+  transform: translateY(0);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+:global(.light-mode) .featureCard {
+  background-color: var(--card-bg-light, rgba(255, 255, 255, 0.9));
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.cardBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  opacity: 0.1;
+}
+
+.cardShape {
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: linear-gradient(135deg, var(--card-color), transparent);
+  transform: rotate(45deg);
+  top: -50%;
+  left: -50%;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  z-index: -1;
+  transition: all 0.5s ease;
+}
+
+.featureCard:hover .cardShape {
+  transform: rotate(45deg) scale(1.1);
+  opacity: 0.8;
+}
+
+.featureIconWrapper {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.5rem;
+}
+
+.featureIcon {
+  position: relative;
+  z-index: 2;
+  font-size: 2.5rem;
+  color: var(--card-color);
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  transform: translateZ(20px);
+  transition: all 0.3s ease;
+}
+
+:global(.light-mode) .featureIcon {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.glowEffect {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: var(--card-color);
+  filter: blur(15px);
+  opacity: 0.4;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  transform: scale(0.7);
+}
+
+.featureCard:hover .glowEffect {
+  opacity: 0.7;
+  transform: scale(0.9);
+}
+
+.featureContent {
+  transform: translateZ(10px);
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.featureTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--foreground, #ffffff);
+  position: relative;
+  display: inline-block;
+}
+
+:global(.light-mode) .featureTitle {
+  color: var(--foreground-light, #121212);
+}
+
+.featureTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background-color: var(--card-color);
+  transition: width 0.3s ease;
+}
+
+.featureCard:hover .featureTitle::after {
+  width: 50px;
+}
+
+.featureDescription {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--foreground-muted, rgba(255, 255, 255, 0.7));
+}
+
+:global(.light-mode) .featureDescription {
+  color: var(--foreground-light-muted, rgba(18, 18, 18, 0.7));
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .featuresGrid {
+    gap: 1.5rem;
+  }
+  
+  .featureCard {
+    min-height: 340px;
+  }
+}
+
+@media (max-width: 992px) {
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .featureCard {
+    min-height: 300px;
+  }
+  
+  .sectionTitle {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .featuresSection {
+    padding: 4rem 1rem;
+  }
+  
+  .sectionHeader {
+    margin-bottom: 3rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+  }
+  
+  .sectionSubtitle {
+    font-size: 1.1rem;
+  }
+  
+  .featureIcon {
+    width: 70px;
+    height: 70px;
+    font-size: 2.2rem;
+  }
+  
+  .featureCard {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .featuresGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+  
+  .featureCard {
+    min-height: auto;
+    padding: 2rem 1.5rem;
+  }
+  
+  .featureTitle {
+    font-size: 1.3rem;
+  }
+  
+  .featureDescription {
+    font-size: 0.9rem;
+  }
+  
+  .featureIconWrapper {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+  .featureCard {
+    backdrop-filter: none;
+    background-color: var(--card-bg, rgba(25, 25, 35, 0.9));
+  }
+  
+  :global(.light-mode) .featureCard {
+    background-color: var(--card-bg-light, rgba(245, 245, 255, 0.9));
+  }
+  
+  .glowEffect {
+    filter: blur(10px);
+  }
+}
+
+/* Dark mode support */
+:global(.dark-mode) .featuresSection {
+  background-color: #1a1a1a;
+}
+
+:global(.dark-mode) .sectionTitle {
+  color: #f0f0f0;
+}
+
+:global(.dark-mode) .sectionSubtitle {
+  color: #ccc;
+}
+
+:global(.dark-mode) .featureCard {
+  background-color: #2a2a2a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+:global(.dark-mode) .featureTitle {
+  color: #f0f0f0;
+}
+
+:global(.dark-mode) .featureDescription {
+  color: #ccc;
+} 

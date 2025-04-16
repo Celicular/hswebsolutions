@@ -1,0 +1,266 @@
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #F9F9F9;
+  color: #333333;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  margin: 0;
+  color: #333333;
+  font-weight: 600;
+}
+
+.logoutButton {
+  padding: 0.6rem 1.2rem;
+  background-color: #FF8C00;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.1s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logoutButton:hover {
+  background-color: #F57C00;
+  transform: translateY(-1px);
+}
+
+.section {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #333333;
+  font-size: 1.4rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.section h2:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background-color: #4CAF50;
+  border-radius: 3px;
+}
+
+.section h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #333333;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.form {
+  background-color: #F9F9F9;
+  border-radius: 8px;
+  padding: 1.8rem;
+  margin-bottom: 2rem;
+  border: 1px solid #E0E0E0;
+}
+
+.formFields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.formGroup {
+  flex: 1;
+  min-width: 250px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333333;
+  font-size: 0.95rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s;
+  background-color: #FFFFFF;
+  color: #333333;
+}
+
+.input:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.formActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.button {
+  padding: 0.8rem 1.5rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+  background-color: #45A049;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cancelButton {
+  background-color: #757575;
+}
+
+.cancelButton:hover {
+  background-color: #616161;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.table th {
+  font-weight: 600;
+  color: #333333;
+  background-color: #F5F5F5;
+}
+
+.table tr:hover {
+  background-color: #F9F9F9;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.actions {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.actionButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.editButton {
+  background-color: #2196F3;
+  color: white;
+}
+
+.editButton:hover {
+  background-color: #1976D2;
+}
+
+.deleteButton {
+  background-color: #FF8C00;
+  color: white;
+}
+
+.deleteButton:hover {
+  background-color: #F57C00;
+}
+
+.error {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #D32F2F;
+  background-color: #FFEBEE;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  border-left: 4px solid #D32F2F;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem;
+  }
+  
+  .section {
+    padding: 1.5rem;
+  }
+  
+  .form {
+    padding: 1.2rem;
+  }
+  
+  .formFields {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .formGroup {
+    min-width: auto;
+  }
+  
+  .table th, 
+  .table td {
+    padding: 0.8rem;
+  }
+  
+  .actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .actionButton {
+    width: 100%;
+  }
+} 

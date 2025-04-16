@@ -1,0 +1,446 @@
+.industriesSection {
+  padding: 6rem 1rem;
+  background-color: var(--background-darker, #0a0a19);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+:global(.light-mode) .industriesSection {
+  background-color: var(--background-light, #f5f5fa);
+}
+
+.backgroundPattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.05;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+:global(.light-mode) .backgroundPattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+}
+
+.container {
+  max-width: 1340px;
+  margin: 0 auto;
+  position: relative;
+  will-change: contents;
+  padding: 0 20px;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--foreground, #ffffff);
+  position: relative;
+  display: inline-block;
+}
+
+:global(.light-mode) .sectionTitle {
+  color: var(--foreground-light, #121212);
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #673AB7, #00B0A3);
+  border-radius: 2px;
+}
+
+.sectionSubtitle {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 1.5rem auto 0;
+  color: var(--foreground-muted, rgba(255, 255, 255, 0.8));
+  line-height: 1.6;
+}
+
+:global(.light-mode) .sectionSubtitle {
+  color: var(--foreground-light-muted, rgba(18, 18, 18, 0.8));
+}
+
+/* Updated grid layout with more space for dynamic animations */
+.industriesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  padding: 30px 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.industryCard {
+  position: relative;
+  height: 200px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  background: rgba(30, 30, 40, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  will-change: transform, box-shadow;
+  z-index: 1;
+}
+
+:global(.light-mode) .industryCard {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.cardContent {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+/* New hexagonal shape for icons */
+.hexShape {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hexShape::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(var(--card-color-rgb, 255, 255, 255), 0.05);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  transform: rotate(0deg);
+  transition: transform 0.5s ease;
+}
+
+.hexShape::after {
+  content: '';
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  border: 1px solid var(--card-color);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  opacity: 0.3;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+.industryCard:hover .hexShape::before {
+  transform: scale(1.1) rotate(30deg);
+  background-color: rgba(var(--card-color-rgb, 255, 255, 255), 0.08);
+}
+
+.industryCard:hover .hexShape::after {
+  transform: scale(1.15) rotate(-20deg);
+  opacity: 0.6;
+}
+
+.iconWrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  z-index: 3;
+}
+
+.icon {
+  position: relative;
+  z-index: 2;
+  font-size: 1.8rem;
+  color: var(--card-color);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.industryCard:hover .icon {
+  transform: scale(1.2);
+}
+
+.iconGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 70%;
+  background-color: var(--card-color);
+  opacity: 0.2;
+  filter: blur(15px);
+  border-radius: 50%;
+  z-index: 1;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.industryCard:hover .iconGlow {
+  opacity: 0.5;
+  transform: translate(-50%, -50%) scale(1.5);
+}
+
+.industryTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--foreground, #ffffff);
+  margin: 0;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.industryCard:hover .industryTitle {
+  transform: translateY(2px);
+}
+
+:global(.light-mode) .industryTitle {
+  color: var(--foreground-light, #121212);
+}
+
+.cardBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  z-index: 1;
+  overflow: hidden;
+}
+
+:global(.light-mode) .cardBorder {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.cardHighlight {
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 250%;
+  height: 250%;
+  background: linear-gradient(
+    var(--rotate, 0deg),
+    transparent,
+    transparent,
+    transparent,
+    var(--card-color),
+    transparent,
+    transparent,
+    transparent
+  );
+  opacity: 0.07;
+  transform-origin: center;
+  animation: rotateGradient 8s linear infinite;
+  animation-delay: var(--delay, 0s);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.industryCard:hover .cardHighlight {
+  animation-duration: 4s;
+  opacity: 0.12;
+}
+
+/* Decorative elements */
+.decorCircle {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #673AB7 0%, transparent 70%);
+  opacity: 0.1;
+  filter: blur(20px);
+  z-index: 0;
+  animation: float 15s ease-in-out infinite;
+}
+
+.decorBox {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, #00B0A3 0%, transparent 70%);
+  opacity: 0.15;
+  filter: blur(15px);
+  z-index: 0;
+  animation: float 20s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(20px, 10px) rotate(10deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes rotateGradient {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .industriesGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+}
+
+@media (max-width: 992px) {
+  .industriesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .industryCard {
+    height: 180px;
+  }
+  
+  .sectionTitle {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .industriesSection {
+    padding: 4rem 1rem;
+  }
+  
+  .sectionHeader {
+    margin-bottom: 3rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+  }
+  
+  .sectionSubtitle {
+    font-size: 1.1rem;
+  }
+  
+  .industryCard {
+    height: 160px;
+  }
+  
+  .iconWrapper {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .icon {
+    font-size: 1.5rem;
+  }
+  
+  .decorCircle, .decorBox {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .industriesGrid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+  
+  .industryCard {
+    height: 140px;
+    max-width: 360px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  .hexShape {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+  .industryCard {
+    backdrop-filter: none;
+    background-color: rgba(30, 30, 40, 0.7);
+  }
+  
+  :global(.light-mode) .industryCard {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .iconGlow {
+    filter: blur(8px);
+  }
+  
+  .cardHighlight {
+    animation-duration: 12s;
+  }
+}
+
+/* Dark mode support */
+:global(.dark-mode) .industriesSection {
+  background-color: #1a1a1a;
+}
+
+:global(.dark-mode) .sectionTitle {
+  color: #f0f0f0;
+}
+
+:global(.dark-mode) .sectionSubtitle {
+  color: #ccc;
+}
+
+:global(.dark-mode) .industryCard {
+  background: rgba(30, 30, 40, 0.6);
+}
+
+:global(.dark-mode) .industryTitle {
+  color: #f0f0f0;
+} 

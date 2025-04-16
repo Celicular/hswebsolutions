@@ -1,0 +1,340 @@
+/* Flow Chart Process Section */
+.processSection {
+  padding: 5rem 1rem;
+  background-color: var(--background-darker, #0a0a19);
+  position: relative;
+  overflow: hidden;
+}
+
+:global(.light-mode) .processSection {
+  background-color: var(--background-light, #f5f5fa);
+}
+
+.container {
+  max-width: 1340px;
+  margin: 0 auto;
+  will-change: contents;
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--foreground, #ffffff);
+  position: relative;
+}
+
+:global(.light-mode) .sectionTitle {
+  color: var(--foreground-light, #121212);
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #673AB7, #00B0A3);
+  border-radius: 2px;
+}
+
+.introText {
+  text-align: center;
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 2rem auto 4rem;
+  color: var(--foreground-muted, rgba(255, 255, 255, 0.8));
+  line-height: 1.6;
+}
+
+:global(.light-mode) .introText {
+  color: var(--foreground-light-muted, rgba(18, 18, 18, 0.8));
+}
+
+.flowchartContainer {
+  position: relative;
+  margin: 3rem 0;
+  min-height: 300px;
+}
+
+/* Horizontal layout for desktop */
+.horizontal {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+/* Vertical layout for mobile */
+.vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.stepsContainer {
+  display: flex;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.horizontal .stepsContainer {
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0 40px;
+}
+
+.vertical .stepsContainer {
+  flex-direction: column;
+  gap: 3rem;
+}
+
+/* Connecting line */
+.connectingLine {
+  position: absolute;
+  background: linear-gradient(90deg, #673AB7, #00B0A3);
+  z-index: 1;
+}
+
+.horizontalLine {
+  top: 50%;
+  left: 2%;
+  height: 4px;
+  width: 0; /* Will be animated via JS */
+  transform: translateY(-50%);
+}
+
+.verticalLine {
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 0; /* Will be animated via JS */
+}
+
+/* Step styling */
+.step {
+  background-color: var(--card-bg, rgba(30, 30, 40, 0.6));
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  flex: 0 0 auto;
+  width: 220px;
+  z-index: 2;
+  margin: 0 10px;
+  transform: translateZ(0);
+}
+
+/* Only apply fancy styles on desktop */
+@media (min-width: 768px) {
+  .step {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  }
+  
+  .step.active {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    width: 240px;
+  }
+}
+
+:global(.light-mode) .step {
+  background-color: var(--card-bg-light, rgba(255, 255, 255, 0.9));
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+  :global(.light-mode) .step {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}
+
+.horizontal .step {
+  margin: 0 1rem;
+}
+
+.vertical .step {
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Mobile-specific active state */
+@media (max-width: 767px) {
+  .step.active {
+    background-color: var(--card-bg, rgba(40, 40, 50, 0.7));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  }
+  
+  :global(.light-mode) .step.active {
+    background-color: var(--card-bg-light, rgba(245, 245, 255, 0.95));
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.stepNumber {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #673AB7, #00B0A3);
+  color: white;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.stepIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #673AB7;
+}
+
+/* Apply transition only on desktop */
+@media (min-width: 768px) {
+  .stepIcon {
+    transition: transform 0.3s ease;
+  }
+  
+  .step:hover .stepIcon {
+    transform: scale(1.1);
+  }
+}
+
+:global(.light-mode) .stepIcon {
+  color: #4CAF50;
+}
+
+.stepTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--foreground, #ffffff);
+}
+
+:global(.light-mode) .stepTitle {
+  color: var(--foreground-light, #121212);
+}
+
+.stepDescription {
+  font-size: 0.95rem;
+  color: var(--foreground-muted, rgba(255, 255, 255, 0.7));
+  line-height: 1.5;
+}
+
+:global(.light-mode) .stepDescription {
+  color: var(--foreground-light-muted, rgba(18, 18, 18, 0.7));
+}
+
+.stepDetails {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  color: var(--foreground-muted, rgba(255, 255, 255, 0.7));
+  line-height: 1.6;
+}
+
+:global(.light-mode) .stepDetails {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--foreground-light-muted, rgba(18, 18, 18, 0.7));
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .processSection {
+    padding: 3rem 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+  }
+  
+  .introText {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .step {
+    width: 100%;
+    padding: 1.2rem;
+  }
+  
+  .step.active {
+    width: 100%;
+  }
+  
+  .stepIcon {
+    font-size: 2rem;
+  }
+  
+  .stepTitle {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+  
+  .processSection {
+    padding: 3rem 1rem;
+  }
+  
+  .step {
+    padding: 1rem;
+  }
+  
+  .stepIcon {
+    font-size: 1.8rem;
+  }
+  
+  .stepTitle {
+    font-size: 1.2rem;
+  }
+}
+
+/* Dark mode support */
+:global(.dark-mode) .processSection {
+  background-color: #1a1a1a;
+}
+
+:global(.dark-mode) .sectionTitle {
+  color: #f0f0f0;
+}
+
+:global(.dark-mode) .introText {
+  color: #ccc;
+}
+
+:global(.dark-mode) .step {
+  background-color: #2a2a2a;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+:global(.dark-mode) .stepTitle {
+  color: #f0f0f0;
+}
+
+:global(.dark-mode) .stepDescription {
+  color: #ccc;
+} 

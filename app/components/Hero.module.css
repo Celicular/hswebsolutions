@@ -1,0 +1,155 @@
+/* Hero section */
+.heroSection {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding-top: 60px; /* Space for navbar */
+  isolation: isolate; /* Create stacking context for z-index containment */
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 900px;
+  padding: 0 2rem;
+  animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.heroCta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.primaryButton {
+  background-color: #673AB7;
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(103, 58, 183, 0.2);
+}
+
+.primaryButton:hover {
+  background-color: #5e35b1;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(103, 58, 183, 0.25);
+}
+
+.secondaryButton {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secondaryButton:hover {
+  border-color: #673AB7;
+  color: #673AB7;
+  transform: translateY(-3px);
+}
+
+/* Light mode styles */
+:global(.light-mode) .heroTitle {
+  color: var(--foreground, #121212);
+}
+
+:global(.light-mode) .heroSubtitle {
+  color: var(--secondary-text, rgba(0, 0, 0, 0.8));
+}
+
+:global(.light-mode) .primaryButton {
+  background-color: #4CAF50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
+
+:global(.light-mode) .primaryButton:hover {
+  background-color: #3d8b40;
+  box-shadow: 0 6px 15px rgba(76, 175, 80, 0.25);
+}
+
+:global(.light-mode) .secondaryButton {
+  border-color: var(--border, rgba(0, 0, 0, 0.2));
+  color: var(--foreground, #121212);
+}
+
+:global(.light-mode) .secondaryButton:hover {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+  
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+  
+  .heroCta {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .primaryButton, .secondaryButton {
+    width: 100%;
+    max-width: 280px;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+  
+  .heroContent {
+    padding: 0 1rem;
+  }
+} 

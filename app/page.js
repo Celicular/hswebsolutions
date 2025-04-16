@@ -1,95 +1,60 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import { useState, useEffect, lazy, Suspense } from 'react';
+import styles from './page.module.css';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+
+// Lazy load heavier components for better initial load time
+const ProcessFlowchart = lazy(() => import('./components/ProcessFlowchart'));
+const StatsCounter = lazy(() => import('./components/StatsCounter'));
+const KeyFeatures = lazy(() => import('./components/KeyFeatures'));
+const Industries = lazy(() => import('./components/Industries'));
+const WhyChooseUs = lazy(() => import('./components/WhyChooseUs'));
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [mounted, setMounted] = useState(false);
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  // Handle initial mounting
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Render a loading state until client-side code has executed
+  if (!mounted) {
+    return (
+      <div className={styles.loading}>
+        <div className={styles.loadingSpinner}></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.container}>
+      <Navbar />
+      <Hero />
+      
+      {/* Use Suspense to handle lazy loaded components */}
+      <Suspense fallback={<div className={styles.sectionLoading}></div>}>
+        <ProcessFlowchart />
+      </Suspense>
+      
+      <Suspense fallback={<div className={styles.sectionLoading}></div>}>
+        <StatsCounter />
+      </Suspense>
+      
+      <Suspense fallback={<div className={styles.sectionLoading}></div>}>
+        <KeyFeatures />
+      </Suspense>
+      
+      <Suspense fallback={<div className={styles.sectionLoading}></div>}>
+        <Industries />
+      </Suspense>
+      
+      {/* Add the Why Choose Us section */}
+      <Suspense fallback={<div className={styles.sectionLoading}></div>}>
+        <WhyChooseUs />
+      </Suspense>
     </div>
   );
 }

@@ -1,14 +1,14 @@
 /* Hero section */
 .heroSection {
   position: relative;
-  height: 100vh;
-  width: 100%;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
   overflow: hidden;
-  padding-top: 60px; /* Space for navbar */
-  isolation: isolate; /* Create stacking context for z-index containment */
+  background-color: #0f172a; /* Bluish dark background */
+  color: #ffffff;
 }
 
 .heroContent {
@@ -119,6 +119,11 @@
 :global(.light-mode) .secondaryButton:hover {
   border-color: #4CAF50;
   color: #4CAF50;
+}
+
+:global(.light-mode) .heroSection {
+  background-color: #e0f2fe; /* Light blue background */
+  color: #0f172a;
 }
 
 /* Responsive styles */

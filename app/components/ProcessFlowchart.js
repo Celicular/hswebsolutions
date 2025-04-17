@@ -94,11 +94,30 @@ const ProcessFlowchart = () => {
 
   // Handle animations when section comes into view
   useEffect(() => {
-    if (inView && !hasDrawnLine.current) {
+    if (inView) {
       controls.start('visible');
-      animateConnectingLine();
+      
+      // Small delay to ensure DOM is ready
+      const timer = setTimeout(() => {
+        if (inView && !hasDrawnLine.current) {
+          animateConnectingLine();
+        }
+      }, 100);
+      
+      return () => clearTimeout(timer);
     }
   }, [controls, inView, isMobile]);
+
+  // Use useLayoutEffect to recalculate line position after component layout
+  useLayoutEffect(() => {
+    if (inView && !hasDrawnLine.current) {
+      const timer = setTimeout(() => {
+        animateConnectingLine();
+      }, 100); // Small delay to ensure rendering is complete
+      
+      return () => clearTimeout(timer);
+    }
+  }, [inView]);
 
   // Animate connecting line between steps with optimizations
   const animateConnectingLine = () => {
@@ -203,7 +222,15 @@ const ProcessFlowchart = () => {
   };
 
   return (
-    <section className={styles.processSection}>
+    <section className={styles.processSection} ref={sectionRef}>
+      {/* Background elements */}
+      <div className={styles.backgroundElements}>
+        <div className={styles.bgCircle} style={{ top: '8%', left: '12%' }}></div>
+        <div className={styles.bgSquare} style={{ bottom: '15%', right: '5%' }}></div>
+        <div className={styles.bgCircle} style={{ bottom: '30%', left: '20%' }}></div>
+        <div className={styles.bgDots}></div>
+      </div>
+      
       <div className={styles.container}>
         <h2 className={styles.sectionTitle}>How We Build Websites</h2>
         <p className={styles.introText}>

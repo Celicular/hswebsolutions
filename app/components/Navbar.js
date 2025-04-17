@@ -53,7 +53,22 @@ export default function Navbar() {
     };
     
     mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    
+    // Expose the toggleSidebar function globally
+    if (typeof window !== 'undefined') {
+      window.openContactSidebar = () => {
+        setSidebarOpen(true);
+        document.body.style.overflow = 'hidden';
+      };
+    }
+    
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+      // Clean up global function
+      if (typeof window !== 'undefined') {
+        delete window.openContactSidebar;
+      }
+    };
   }, []);
 
   const toggleTheme = () => {

@@ -23,22 +23,6 @@ function AnimatedBackground() {
   // Check if device is mobile on mount
   useEffect(() => {
     isMobileRef.current = window.innerWidth < 768;
-    
-    // Check visibility
-    const handleVisibilityChange = () => {
-      isVisibleRef.current = document.visibilityState === 'visible';
-      
-      // If returning to visibility, restart animation if it was stopped
-      if (isVisibleRef.current && !animationRef.current) {
-        animationRef.current = requestAnimationFrame(animate);
-      }
-    };
-    
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
   }, []);
 
   // Check theme on mount and add observer for changes
@@ -216,7 +200,7 @@ function AnimatedBackground() {
           colorIndex: Math.floor(Math.random() * 3), // 0, 1, or 2 for different colors
           brightness: Math.random() * 20 + 80, // 80-100% brightness
           connections: [],
-          hue: currentLightMode ? 140 : 210 // Green for light mode, Blue for dark mode (default)
+          hue: currentLightMode ? 210 : 210 // Blue for both modes
         });
       }
     };
@@ -406,6 +390,18 @@ function AnimatedBackground() {
 
     // Start animation
     animationRef.current = requestAnimationFrame(animate);
+    
+    // Handle visibility changes
+    const handleVisibilityChange = () => {
+      isVisibleRef.current = document.visibilityState === 'visible';
+      
+      // If returning to visibility, restart animation if it was stopped
+      if (isVisibleRef.current && !animationRef.current) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     // Cleanup
     return () => {
@@ -414,6 +410,7 @@ function AnimatedBackground() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouch);
       window.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       clearTimeout(resizeTimer);
     };
   }, []);

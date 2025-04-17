@@ -1,0 +1,453 @@
+.clientsSection {
+  padding: 6rem 1rem;
+  background-color: #0f172a; /* Bluish dark background */
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Light mode support */
+:global(.light-mode) .clientsSection {
+  background-color: var(--background, #e0f2fe); /* Light background */
+}
+
+.container {
+  max-width: 1340px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Background elements */
+.backgroundElements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bgCircle {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(103, 58, 183, 0.15), rgba(0, 176, 163, 0.05));
+  filter: blur(50px);
+  animation: floatAnimation 25s infinite alternate ease-in-out;
+}
+
+.bgSquare {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.12), rgba(156, 39, 176, 0.08));
+  filter: blur(40px);
+  animation: floatAnimation 28s infinite alternate-reverse ease-in-out;
+}
+
+.bgDots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20px 20px, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
+  background-size: 40px 40px;
+  opacity: 0.3;
+}
+
+:global(.light-mode) .bgDots {
+  background-image: 
+    radial-gradient(circle at 20px 20px, rgba(0, 0, 0, 0.05) 2px, transparent 2px);
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(30px, 20px) rotate(5deg);
+  }
+  100% {
+    transform: translate(-30px, -20px) rotate(-5deg);
+  }
+}
+
+/* Marquee animation */
+.marqueeContainer {
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 10px 0;
+  margin-bottom: 2rem;
+  border-radius: 40px;
+  position: relative;
+}
+
+:global(.light-mode) .marqueeContainer {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.marquee {
+  display: flex;
+  animation: marqueeScroll 20s linear infinite;
+  white-space: nowrap;
+}
+
+.marquee span {
+  display: inline-block;
+  padding: 0 2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+:global(.light-mode) .marquee span {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Section header styles */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--foreground, #ffffff);
+  position: relative;
+  display: inline-block;
+}
+
+:global(.light-mode) .sectionTitle {
+  color: var(--foreground-light, #121212);
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #673AB7, #00B0A3);
+  border-radius: 2px;
+}
+
+.sectionSubtitle {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 1.5rem auto 0;
+  color: var(--foreground-muted, rgba(255, 255, 255, 0.8));
+  line-height: 1.6;
+}
+
+:global(.light-mode) .sectionSubtitle {
+  color: var(--foreground-light-muted, rgba(18, 18, 18, 0.8));
+}
+
+/* Carousel container */
+.carouselContainer {
+  position: relative;
+  padding: 1rem 0 3rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Swiper container */
+.swiperContainer {
+  padding: 30px 10px;
+  overflow: visible;
+}
+
+/* Swiper slide */
+.swiperSlide {
+  transition: all 0.3s ease;
+  transform-origin: center center;
+}
+
+/* Client card styles */
+.clientCard {
+  position: relative;
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+:global(.light-mode) .clientCard {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.clientCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(103, 58, 183, 0.1);
+}
+
+/* Card glow effect */
+.cardGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #673AB7, #00B0A3);
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.clientCard:hover .cardGlow {
+  opacity: 1;
+}
+
+/* Logo placeholder */
+.clientLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.logoImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  object-fit: contain;
+  background-color: white;
+  padding: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.clientCard:hover .logoImage {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Client info */
+.clientInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.clientHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.clientName {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--foreground, #ffffff);
+  text-align: center;
+}
+
+:global(.light-mode) .clientName {
+  color: var(--foreground-light, #121212);
+}
+
+.clientCountry {
+  font-size: 1.2rem;
+}
+
+/* Star rating */
+.ratingStars {
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+  display: flex;
+}
+
+.starFull {
+  color: #FFC107;
+  margin-right: 2px;
+}
+
+.starHalf {
+  position: relative;
+  color: #FFC107;
+  margin-right: 2px;
+}
+
+.starHalf::after {
+  content: '★';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+  color: #FFC107;
+}
+
+/* Client caption */
+.clientCaption {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--foreground-muted, rgba(255, 255, 255, 0.8));
+  margin: 0.5rem 0 0;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+:global(.light-mode) .clientCaption {
+  color: var(--foreground-light-muted, rgba(18, 18, 18, 0.8));
+}
+
+/* Pagination */
+.paginationWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.paginationBullet {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  margin: 0 5px !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+  display: inline-block;
+}
+
+:global(.light-mode) .paginationBullet {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.paginationBulletActive {
+  opacity: 1 !important;
+  background-color: #673AB7 !important;
+  transform: scale(1.2);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .clientCard {
+    height: 300px;
+  }
+  
+  .logoImage {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .clientName {
+    font-size: 1.2rem;
+  }
+  
+  .clientCaption {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .clientsSection {
+    padding: 4rem 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+  }
+  
+  .sectionSubtitle {
+    font-size: 1rem;
+  }
+  
+  .carouselContainer {
+    padding: 0.5rem 0 2.5rem;
+  }
+  
+  .clientCard {
+    height: 320px;
+    padding: 1.2rem;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .marquee span {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .clientsSection {
+    padding: 3rem 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+  
+  .bgCircle, .bgSquare {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .logoImage {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* Dark mode support */
+:global(.dark-mode) .clientsSection {
+  background-color: #0f172a;
+}
+
+:global(.dark-mode) .sectionTitle {
+  color: #f0f0f0;
+}
+
+:global(.dark-mode) .sectionSubtitle {
+  color: #ccc;
+}
+
+:global(.dark-mode) .clientCard {
+  background: rgba(30, 41, 59, 0.6);
+}
+
+:global(.dark-mode) .clientName {
+  color: #f0f0f0;
+}
+
+:global(.dark-mode) .clientCaption {
+  color: rgba(255, 255, 255, 0.7);
+} 

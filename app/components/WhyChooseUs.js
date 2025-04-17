@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import styles from './WhyChooseUs.module.css';
@@ -66,9 +66,11 @@ const WhyChooseUs = () => {
   });
   
   // Start animations when section comes into view
-  if (inView) {
-    controls.start('visible');
-  }
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    }
+  }, [controls, inView]);
   
   // Variants for container animation
   const containerVariants = {
@@ -149,7 +151,7 @@ const WhyChooseUs = () => {
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
           >
-            <span>100+ Projects Delivered</span>
+            <span>95+ Projects Delivered</span>
           </motion.div>
           <p className={styles.sectionSubtitle}>
             HSWebSolutions is more than a service provider – we're your digital partner for long-term growth. 

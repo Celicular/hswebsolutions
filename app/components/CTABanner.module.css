@@ -1,0 +1,391 @@
+.ctaBannerSection {
+  padding: 80px 0 120px;
+  position: relative;
+  overflow: visible;
+  margin-top: 0;
+  z-index: 1;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ctaBannerWrapper {
+  display: flex;
+  gap: 30px;
+  margin-top: 40px;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.ctaCard {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  min-height: 380px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translateZ(0);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  z-index: 1;
+}
+
+.ctaCard:hover {
+  transform: translateY(-10px);
+}
+
+.projectCard {
+  background: linear-gradient(135deg, rgba(0, 161, 255, 0.05), rgba(0, 215, 255, 0.15));
+  box-shadow: 0 10px 30px rgba(0, 161, 255, 0.15);
+  border: 1px solid rgba(0, 161, 255, 0.2);
+}
+
+.projectCard:hover {
+  box-shadow: 0 20px 40px rgba(0, 161, 255, 0.25), 0 0 20px rgba(0, 161, 255, 0.15);
+}
+
+.contactCard {
+  background: linear-gradient(135deg, rgba(255, 127, 80, 0.05), rgba(255, 102, 102, 0.15));
+  box-shadow: 0 10px 30px rgba(255, 102, 102, 0.15);
+  border: 1px solid rgba(255, 102, 102, 0.2);
+}
+
+.contactCard:hover {
+  box-shadow: 0 20px 40px rgba(255, 102, 102, 0.25), 0 0 20px rgba(255, 102, 102, 0.15);
+}
+
+/* Card Content Styles */
+.cardContent {
+  position: relative;
+  z-index: 2;
+}
+
+.iconWrapper {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rocketIcon, .supportIcon {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: relative;
+  z-index: 2;
+}
+
+.rocketIcon {
+  color: #00d7ff;
+  background: rgba(0, 161, 255, 0.1);
+}
+
+.rocketIcon svg {
+  width: 32px;
+  height: 32px;
+  stroke-width: 2;
+}
+
+.supportIcon {
+  color: #ff6666;
+  background: rgba(255, 102, 102, 0.1);
+}
+
+.supportIcon svg {
+  width: 32px;
+  height: 32px;
+  stroke-width: 2;
+}
+
+.circlePulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.projectCard .circlePulse {
+  background: rgba(0, 215, 255, 0.1);
+  animation: pulseCyan 3s infinite;
+}
+
+.contactCard .circlePulse {
+  background: rgba(255, 102, 102, 0.1);
+  animation: pulseOrange 3s infinite;
+}
+
+@keyframes pulseCyan {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 215, 255, 0.4);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 15px rgba(0, 215, 255, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 215, 255, 0);
+  }
+}
+
+@keyframes pulseOrange {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 102, 102, 0.4);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 15px rgba(255, 102, 102, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 102, 102, 0);
+  }
+}
+
+.cardTitle {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--foreground);
+}
+
+.cardDescription {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: var(--foreground-muted);
+  max-width: 90%;
+}
+
+.ctaButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.ctaButton:hover::before {
+  left: 100%;
+}
+
+.buttonIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.buttonIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.ctaButton:hover .buttonIcon {
+  transform: translateX(5px);
+}
+
+.startButton {
+  background: linear-gradient(90deg, #00a1ff, #00d7ff);
+  color: white;
+  box-shadow: 0 5px 15px rgba(0, 161, 255, 0.3);
+}
+
+.startButton:hover {
+  box-shadow: 0 8px 25px rgba(0, 161, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.contactButton {
+  background: linear-gradient(90deg, #ff7f50, #ff6666);
+  color: white;
+  box-shadow: 0 5px 15px rgba(255, 102, 102, 0.3);
+}
+
+.contactButton:hover {
+  box-shadow: 0 8px 25px rgba(255, 102, 102, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Background Patterns */
+.cardBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.05;
+  transition: opacity 0.3s ease;
+}
+
+.ctaCard:hover .cardBackground {
+  opacity: 0.08;
+}
+
+.circuitPattern {
+  background-image: radial-gradient(circle at 10% 20%, rgba(0, 215, 255, 0.4) 1px, transparent 1px),
+                    radial-gradient(circle at 30% 50%, rgba(0, 215, 255, 0.3) 1px, transparent 1px),
+                    radial-gradient(circle at 70% 80%, rgba(0, 215, 255, 0.5) 1px, transparent 1px),
+                    linear-gradient(to right, rgba(0, 215, 255, 0.3) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0, 215, 255, 0.3) 1px, transparent 1px);
+  background-size: 50px 50px, 40px 40px, 30px 30px, 20px 20px, 20px 20px;
+  background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-5deg) scale(1.5);
+}
+
+.wavyPattern {
+  background-image: 
+    radial-gradient(circle at 90% 10%, rgba(255, 102, 102, 0.4) 1px, transparent 1px),
+    radial-gradient(circle at 10% 90%, rgba(255, 102, 102, 0.3) 1px, transparent 1px),
+    repeating-linear-gradient(45deg, rgba(255, 102, 102, 0.1) 0px, rgba(255, 102, 102, 0.1) 2px, transparent 2px, transparent 8px);
+  background-size: 50px 50px, 40px 40px, 20px 20px;
+  width: 100%;
+  height: 100%;
+  transform: rotate(5deg) scale(1.5);
+}
+
+/* Effects for page scrolling */
+.highlightPulse {
+  animation: highlightEffect 2s ease-out;
+}
+
+@keyframes highlightEffect {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 215, 255, 0);
+  }
+  20% {
+    box-shadow: 0 0 0 20px rgba(0, 215, 255, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 215, 255, 0);
+  }
+}
+
+/* Diagonal overlap for desktop */
+@media (min-width: 992px) {
+  .ctaBannerWrapper {
+    position: relative;
+    transform: skewY(-3deg);
+    margin-bottom: 0;
+  }
+  
+  .ctaCard {
+    transform: skewY(3deg);
+  }
+  
+  .ctaCard:hover {
+    transform: skewY(3deg) translateY(-10px);
+  }
+  
+  .ctaBannerSection {
+    margin-bottom: 0;
+    padding-bottom: 80px;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 991px) {
+  .ctaBannerWrapper {
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  .ctaCard {
+    width: 100%;
+  }
+  
+  .cardDescription {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .ctaBannerSection {
+    padding: 60px 0 100px;
+  }
+  
+  .cardTitle {
+    font-size: 24px;
+  }
+  
+  .cardDescription {
+    font-size: 15px;
+  }
+  
+  .ctaButton {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ctaBannerSection {
+    padding: 50px 0 80px;
+  }
+  
+  .ctaCard {
+    padding: 30px;
+    min-height: 320px;
+  }
+  
+  .iconWrapper {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+  }
+  
+  .rocketIcon, .supportIcon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .cardTitle {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+} 

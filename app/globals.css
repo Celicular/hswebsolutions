@@ -1,6 +1,7 @@
 /* Light mode variables */
 :root {
-  --background: #F9F9F9;
+  --background: #e0f2fe;
+  --background-darker: #0f172a;
   --foreground: #333333;
   --primary: #4CAF50;
   --primary-hover: #45A049;
@@ -15,26 +16,27 @@
   --navbar-bg: rgba(255, 255, 255, 0.9);
   --card-bg: #FFFFFF;
   --shadow: rgba(0, 0, 0, 0.08);
-  --particle-color: rgba(76, 175, 80, 0.08);
-  --particle-accent: rgba(76, 175, 80, 0.15);
-  --hexagon-fill: rgba(76, 175, 80, 0.05);
-  --hexagon-stroke: rgba(76, 175, 80, 0.1);
+  --particle-color: rgba(59, 130, 246, 0.1);
+  --particle-accent: rgba(59, 130, 246, 0.2);
+  --hexagon-fill: rgba(59, 130, 246, 0.05);
+  --hexagon-stroke: rgba(59, 130, 246, 0.1);
 }
 
 /* Dark mode variables */
 .dark-mode {
-  --background: #121212;
+  --background: #0f172a; /* Blue tone background from WhyChooseUs */
+  --background-darker: #0a1224;
   --foreground: #F5F5F5;
   --secondary-text: #BBBBBB;
   --border: #333333;
-  --input-bg: #1E1E1E;
-  --navbar-bg: rgba(18, 18, 18, 0.9);
-  --card-bg: #1E1E1E;
+  --input-bg: #1e293b;
+  --navbar-bg: rgba(15, 23, 42, 0.9);
+  --card-bg: #1e293b;
   --shadow: rgba(0, 0, 0, 0.3);
-  --particle-color: rgba(255, 255, 255, 0.1);
-  --particle-accent: rgba(76, 175, 80, 0.3);
-  --hexagon-fill: rgba(255, 255, 255, 0.03);
-  --hexagon-stroke: rgba(255, 255, 255, 0.06);
+  --particle-color: rgba(59, 130, 246, 0.2);
+  --particle-accent: rgba(59, 130, 246, 0.4);
+  --hexagon-fill: rgba(59, 130, 246, 0.05);
+  --hexagon-stroke: rgba(59, 130, 246, 0.1);
 }
 
 /* Base styles */
@@ -122,4 +124,14 @@ input, textarea, select {
 
 .animate-slide-in {
   animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Module backgrounds - for sections that need the blue background in dark mode */
+.module-background {
+  background-color: var(--background);
+  transition: background-color 0.3s ease;
+}
+
+:root.dark-mode .module-background {
+  background-color: #0f172a; /* Bluish dark background from WhyChooseUs */
 }

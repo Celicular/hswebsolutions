@@ -1,13 +1,26 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 import { FaBriefcase, FaStore, FaGraduationCap, FaHospital, FaHotel, FaHome, FaChurch, FaCarAlt } from 'react-icons/fa';
 import styles from './Industries.module.css';
 
 const Industries = () => {
   const randomPositionsRef = useRef(null);
   const isMobileRef = useRef(false);
+  const controls = useAnimation();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  // Start animations when section comes into view
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    }
+  }, [controls, inView]);
 
   // Generate random positions for the cards in desktop view
   const getRandomPositions = () => {
@@ -103,7 +116,14 @@ const Industries = () => {
 
   return (
     <section className={styles.industriesSection} id="industries">
-      <div className={styles.backgroundPattern}></div>
+      {/* Add background elements */}
+      <div className={styles.backgroundElements}>
+        <div className={styles.bgCircle} style={{ top: '5%', right: '15%' }}></div>
+        <div className={styles.bgSquare} style={{ top: '60%', left: '8%' }}></div>
+        <div className={styles.bgCircle} style={{ bottom: '15%', right: '20%' }}></div>
+        <div className={styles.bgDots}></div>
+      </div>
+      
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Industries We Serve</h2>
@@ -135,8 +155,8 @@ const Industries = () => {
         <motion.div 
           className={styles.industriesGrid}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          animate={controls}
+          ref={ref}
         >
           {industries.map((industry, index) => (
             <motion.div

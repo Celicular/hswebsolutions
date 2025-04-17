@@ -1,13 +1,13 @@
 .whyChooseSection {
   padding: 6rem 1rem;
-  background-color: var(--background-darker, #0a0a19);
+  background-color: #0f172a; /* Bluish dark background */
   position: relative;
   overflow: hidden;
   z-index: 1;
 }
 
 :global(.light-mode) .whyChooseSection {
-  background-color: var(--background-light, #f5f5fa);
+  background-color: var(--background, #e0f2fe); /* Light background */
 }
 
 .container {
@@ -418,7 +418,7 @@
 
 /* Dark mode support */
 :global(.dark-mode) .whyChooseSection {
-  background-color: var(--background-darker, #0a0a19);
+  background-color: #0f172a;
 }
 
 :global(.dark-mode) .sectionTitle {
@@ -426,11 +426,11 @@
 }
 
 :global(.dark-mode) .sectionSubtitle {
-  color: rgba(255, 255, 255, 0.8);
+  color: #ccc;
 }
 
 :global(.dark-mode) .reasonCard {
-  background: rgba(30, 30, 40, 0.4);
+  background: rgba(30, 41, 59, 0.6);
 }
 
 :global(.dark-mode) .reasonTitle {

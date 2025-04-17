@@ -1,0 +1,311 @@
+.footer {
+  position: relative;
+  padding: 80px 0 30px;
+  background: var(--background);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.particlesContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.5;
+}
+
+.particles {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.footerTop {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 80px;
+  margin-bottom: 40px;
+  align-items: flex-start;
+}
+
+/* Brand Section */
+.brandSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.footerLogo {
+  margin-right: 12px;
+  border-radius: 10px;
+  filter: drop-shadow(0 0 5px rgba(0, 161, 255, 0.3));
+  transition: filter 0.3s ease;
+}
+
+:global(.dark-mode) .footerLogo {
+  filter: drop-shadow(0 0 8px rgba(0, 215, 255, 0.4));
+}
+
+.brandName {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(90deg, var(--foreground), var(--foreground-muted));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.tagline {
+  font-size: 15px;
+  color: var(--foreground-muted);
+  margin-bottom: 24px;
+  max-width: 90%;
+  line-height: 1.6;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 16px;
+}
+
+.socialIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--foreground);
+  font-size: 18px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.socialIcon:hover {
+  transform: translateY(-3px);
+  color: white;
+}
+
+.socialIcon:nth-child(1):hover {
+  background: #24292e;
+  border-color: #24292e;
+  box-shadow: 0 5px 15px rgba(36, 41, 46, 0.4);
+}
+
+.socialIcon:nth-child(2):hover {
+  background: #0077b5;
+  border-color: #0077b5;
+  box-shadow: 0 5px 15px rgba(0, 119, 181, 0.4);
+}
+
+.socialIcon:nth-child(3):hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-color: transparent;
+  box-shadow: 0 5px 15px rgba(220, 39, 67, 0.4);
+}
+
+.socialIcon:nth-child(4):hover {
+  background: #1da1f2;
+  border-color: #1da1f2;
+  box-shadow: 0 5px 15px rgba(29, 161, 242, 0.4);
+}
+
+.socialIcon:after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(-45deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.socialIcon:hover:after {
+  opacity: 1;
+  animation: socialIconShine 0.5s ease-out;
+}
+
+@keyframes socialIconShine {
+  0% {
+    transform: rotate(-45deg) translateY(100%);
+  }
+  100% {
+    transform: rotate(-45deg) translateY(-100%);
+  }
+}
+
+/* Navigation Links */
+.navLinks {
+  padding: 15px 25px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  min-width: 220px;
+}
+
+:global(.dark-mode) .navLinks {
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+}
+
+.navLinks:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+:global(.dark-mode) .navLinks:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.linkTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  position: relative;
+  color: var(--foreground);
+  padding-bottom: 10px;
+}
+
+.linkTitle:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, #00a1ff, #00d7ff);
+  transition: width 0.3s ease;
+}
+
+.navLinks:hover .linkTitle:after {
+  width: 50px;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.linkList li {
+  margin-bottom: 12px;
+}
+
+.linkList a {
+  color: var(--foreground-muted);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+  display: inline-block;
+  font-size: 15px;
+}
+
+.linkList a:hover {
+  color: var(--foreground);
+  transform: translateX(3px);
+}
+
+.linkList a:before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #00a1ff, transparent);
+  transition: width 0.3s ease;
+}
+
+.linkList a:hover:before {
+  width: 100%;
+}
+
+.estimateLink {
+  font-weight: 600;
+  color: #00a1ff;
+}
+
+:global(.dark-mode) .estimateLink {
+  color: #00d7ff;
+}
+
+.estimateLink:hover {
+  color: #00d7ff;
+}
+
+:global(.dark-mode) .estimateLink:hover {
+  color: #00a1ff;
+}
+
+/* Divider and Footer Bottom */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  margin-bottom: 30px;
+}
+
+.footerBottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.copyright {
+  font-size: 14px;
+  color: var(--foreground-muted);
+  margin: 0;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .footer {
+    padding: 60px 0 30px;
+  }
+  
+  .footerTop {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .navLinks {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 50px 0 30px;
+  }
+  
+  .navLinks {
+    padding: 15px 20px;
+  }
+} 

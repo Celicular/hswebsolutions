@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import styles from './KeyFeatures.module.css';
@@ -66,9 +66,11 @@ const KeyFeatures = () => {
   });
   
   // Start animations when section comes into view
-  if (inView) {
-    controls.start('visible');
-  }
+  useEffect(() => {
+    if (inView) {
+      controls.start('visible');
+    }
+  }, [controls, inView]);
   
   // Variants for container animation
   const containerVariants = {
@@ -99,6 +101,14 @@ const KeyFeatures = () => {
 
   return (
     <section className={styles.featuresSection} ref={ref}>
+      {/* Add background elements */}
+      <div className={styles.backgroundElements}>
+        <div className={styles.bgCircle} style={{ top: '15%', right: '10%' }}></div>
+        <div className={styles.bgSquare} style={{ top: '70%', left: '5%' }}></div>
+        <div className={styles.bgCircle} style={{ bottom: '20%', right: '15%' }}></div>
+        <div className={styles.bgDots}></div>
+      </div>
+      
       <div className={styles.container}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Our Key Features</h2>
@@ -119,7 +129,11 @@ const KeyFeatures = () => {
               key={feature.id}
               className={styles.featureCard}
               variants={cardVariants}
-              style={{ '--card-color': feature.color }}
+              style={{ 
+                '--card-color': feature.color,
+                '--card-color-rgb': feature.color.replace('#', '').match(/.{2}/g)
+                  ?.map(hex => parseInt(hex, 16)).join(', ') || '255, 255, 255'
+              }}
               whileHover={{ 
                 y: -10,
                 boxShadow: `0 20px 35px rgba(0, 0, 0, 0.2), 0 0 10px ${feature.color}40`

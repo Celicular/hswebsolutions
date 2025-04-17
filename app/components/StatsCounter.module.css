@@ -1,270 +1,261 @@
 .statsSection {
-  padding: 5rem 1rem;
-  background-color: var(--background-darker, #0a0a19);
   position: relative;
+  padding: 80px 0;
+  background-color: #0f172a; /* Bluish dark background */
+  color: #ffffff;
   overflow: hidden;
 }
 
-:global(.light-mode) .statsSection {
-  background-color: var(--background-light, #f5f5fa);
+/* Background elements */
+.backgroundElements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bgCircle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.1));
+  width: 250px;
+  height: 250px;
+  filter: blur(30px);
+  opacity: 0.4;
+}
+
+.bgSquare {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, rgba(29, 78, 216, 0.15), rgba(96, 165, 250, 0.05));
+  transform: rotate(15deg);
+  filter: blur(25px);
+  opacity: 0.3;
+}
+
+.bgDots {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(148, 163, 184, 0.15) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.1;
 }
 
 .container {
-  max-width: 1340px;
+  position: relative;
+  max-width: 1200px;
   margin: 0 auto;
-  will-change: contents;
+  padding: 0 20px;
+  z-index: 2;
 }
 
 .sectionTitle {
   text-align: center;
   font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 3rem;
-  color: var(--foreground, #ffffff);
+  margin-bottom: 50px;
   position: relative;
-}
-
-:global(.light-mode) .sectionTitle {
-  color: var(--foreground-light, #121212);
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .sectionTitle::after {
   content: '';
   position: absolute;
-  bottom: -10px;
+  bottom: -15px;
   left: 50%;
   transform: translateX(-50%);
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #673AB7, #00B0A3);
+  background: linear-gradient(90deg, #3b82f6, #38bdf8);
   border-radius: 2px;
 }
 
 .statsContainer {
   display: flex;
-  justify-content: space-around;
   flex-wrap: wrap;
-  gap: 2rem;
+  justify-content: center;
+  gap: 30px;
 }
 
 .statCard {
-  background-color: var(--card-bg, rgba(30, 30, 40, 0.6));
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 2rem 1.5rem;
+  padding: 25px;
+  width: 240px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  min-width: 200px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
-  transform: translateZ(0);
-  will-change: transform;
 }
 
-/* Only apply backdrop filter and complex shadows on non-mobile */
-@media (min-width: 768px) {
-  .statCard {
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .statCard:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-  }
+.statCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--accent-color, #3b82f6);
 }
 
-:global(.light-mode) .statCard {
-  background-color: var(--card-bg-light, rgba(255, 255, 255, 0.9));
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-@media (min-width: 768px) {
-  :global(.light-mode) .statCard {
-    border: 1px solid rgba(0, 0, 0, 0.05);
-  }
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
 }
 
 .iconContainer {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  color: var(--accent-color, #673AB7);
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 80px;
-  height: 80px;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Only apply fancy icon styles on desktop */
-@media (min-width: 768px) {
-  .iconContainer {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.3s ease;
-  }
-  
-  .statCard:hover .iconContainer {
-    transform: scale(1.1);
-  }
-  
-  :global(.light-mode) .iconContainer {
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.02));
-    border: 1px solid rgba(0, 0, 0, 0.05);
-  }
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--accent-color, #3b82f6);
+  font-size: 1.8rem;
 }
 
 .statContent {
-  position: relative;
-  z-index: 2;
+  text-align: center;
 }
 
 .statValue {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  color: var(--foreground, #ffffff);
-  margin-bottom: 0.5rem;
-  line-height: 1;
-}
-
-:global(.light-mode) .statValue {
-  color: var(--foreground-light, #121212);
+  margin: 0;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: baseline;
 }
 
 .statSuffix {
-  font-size: 2rem;
-  color: var(--accent-color, #673AB7);
-  font-weight: 700;
-  margin-left: 0.2rem;
+  font-size: 1.5rem;
+  margin-left: 2px;
+  color: var(--accent-color, #3b82f6);
 }
 
 .statTitle {
-  font-size: 1.2rem;
+  margin-top: 8px;
+  font-size: 1.1rem;
+  color: #94a3b8;
   font-weight: 500;
-  color: var(--foreground-muted, rgba(255, 255, 255, 0.7));
-  margin: 0;
 }
 
-:global(.light-mode) .statTitle {
-  color: var(--foreground-light-muted, rgba(18, 18, 18, 0.7));
-}
-
-/* Responsive design */
+/* Responsive Adjustments */
 @media (max-width: 1200px) {
   .statsContainer {
-    padding: 0 1rem;
+    justify-content: center;
   }
   
   .statCard {
-    min-width: 180px;
-  }
-}
-
-@media (max-width: 992px) {
-  .statsContainer {
-    gap: 1.5rem;
-  }
-  
-  .statCard {
-    padding: 1.5rem 1rem;
-  }
-  
-  .statValue {
-    font-size: 2.5rem;
-  }
-  
-  .statSuffix {
-    font-size: 1.8rem;
-  }
-  
-  .iconContainer {
-    font-size: 2rem;
-    width: 70px;
-    height: 70px;
+    width: 220px;
   }
 }
 
 @media (max-width: 768px) {
   .statsSection {
-    padding: 3rem 1rem;
-  }
-  
-  .statsContainer {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-  
-  .statCard {
-    flex: 0 0 calc(50% - 1rem);
-    min-width: auto;
-    /* Simplify rendering for mobile */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    border: none;
+    padding: 60px 0;
   }
   
   .sectionTitle {
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 40px;
   }
-}
-
-@media (max-width: 576px) {
+  
+  .statsContainer {
+    gap: 20px;
+  }
+  
   .statCard {
-    flex: 0 0 100%;
-    margin-bottom: 1.5rem;
+    width: calc(50% - 20px);
+    min-width: 150px;
+    padding: 20px;
   }
   
   .iconContainer {
-    margin-bottom: 1rem;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
   }
   
   .statValue {
-    font-size: 2.2rem;
-  }
-  
-  .statSuffix {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
   
   .statTitle {
     font-size: 1rem;
   }
-}
-
-/* Dark mode support */
-:global(.dark-mode) .statsSection {
-  background-color: #1a1a1a;
-}
-
-:global(.dark-mode) .sectionTitle {
-  color: #f0f0f0;
-}
-
-:global(.dark-mode) .statCard {
-  background-color: #2a2a2a;
-}
-
-@media (min-width: 768px) {
-  :global(.dark-mode) .statCard {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  
+  .bgCircle, .bgSquare {
+    width: 150px;
+    height: 150px;
   }
 }
 
-:global(.dark-mode) .statValue {
-  color: #f0f0f0;
+@media (max-width: 480px) {
+  .statsSection {
+    padding: 50px 0;
+  }
+  
+  .statCard {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
 }
 
-:global(.dark-mode) .statTitle {
-  color: #ccc;
+/* Dark Mode Adjustments */
+[data-theme="light"] .statsSection,
+:global(.light-mode) .statsSection {
+  background-color: var(--background, #e0f2fe); /* Light background */
+  color: #0f172a;
+}
+
+[data-theme="light"] .sectionTitle,
+:global(.light-mode) .sectionTitle {
+  color: #0f172a;
+}
+
+[data-theme="light"] .statCard,
+:global(.light-mode) .statCard {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .statValue,
+:global(.light-mode) .statValue {
+  color: #0f172a;
+}
+
+[data-theme="light"] .statTitle,
+:global(.light-mode) .statTitle {
+  color: #475569;
+}
+
+[data-theme="light"] .bgCircle,
+:global(.light-mode) .bgCircle {
+  background: linear-gradient(45deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.08));
+}
+
+[data-theme="light"] .bgSquare,
+:global(.light-mode) .bgSquare {
+  background: linear-gradient(135deg, rgba(29, 78, 216, 0.1), rgba(96, 165, 250, 0.04));
+}
+
+[data-theme="light"] .bgDots {
+  background-image: radial-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px);
 } 

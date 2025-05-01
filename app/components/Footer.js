@@ -103,7 +103,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} style={{ position: 'relative', zIndex: 10 }}>
       <div className={styles.particlesContainer}>
         <canvas ref={particlesRef} className={styles.particles}></canvas>
       </div>
@@ -145,10 +145,11 @@ const Footer = () => {
           <div className={styles.navLinks}>
             <h4 className={styles.linkTitle}>Quick Links</h4>
             <ul className={styles.linkList}>
-              <li><Link href="#services">Services</Link></li>
-              <li><Link href="#about">About Us</Link></li>
-              <li><Link href="#pricing">Pricing</Link></li>
-              <li><Link href="#blogs">Blogs</Link></li>
+              <li><Link href="/">Home</Link></li>
+              <li><Link href="/services">Services</Link></li>
+              <li><Link href="/about">About Us</Link></li>
+              <li><Link href="/pricing">Pricing</Link></li>
+              <li><Link href="/blog">Blogs</Link></li>
               <li><Link href="#estimate" className={styles.estimateLink}>Estimate Project</Link></li>
             </ul>
           </div>

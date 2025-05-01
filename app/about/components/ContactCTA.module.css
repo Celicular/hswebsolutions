@@ -1,0 +1,167 @@
+.section {
+  position: relative;
+  padding: 100px 0;
+  overflow: hidden;
+  background: var(--background);
+}
+
+.backgroundElements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bgCircle {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.3;
+}
+
+.bgCircle:first-child {
+  top: -50px;
+  right: -50px;
+  background: radial-gradient(circle at center, rgba(0, 112, 243, 0.2), transparent 70%);
+}
+
+.bgCircle:last-child {
+  bottom: -50px;
+  left: -50px;
+  background: radial-gradient(circle at center, rgba(0, 195, 255, 0.15), transparent 70%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaContent {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 50px;
+  border-radius: 20px;
+  background: var(--card-bg);
+  box-shadow: 0 10px 30px rgba(0, 112, 243, 0.1);
+  border: 1px solid var(--card-border);
+  transition: all 0.3s ease;
+}
+
+.ctaContent:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 112, 243, 0.15);
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #0070f3;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
+.ctaTitle::after {
+  content: '';
+  position: absolute;
+  height: 4px;
+  width: 60px;
+  background: linear-gradient(135deg, #0070f3 0%, #00c3ff 100%);
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+}
+
+.ctaDescription {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  color: var(--text-color);
+}
+
+.ctaButtons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.primaryButton {
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #0070f3 0%, #00c3ff 100%);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 112, 243, 0.2);
+}
+
+.primaryButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 25px rgba(0, 112, 243, 0.3);
+}
+
+.secondaryButton {
+  padding: 12px 30px;
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid rgba(0, 112, 243, 0.3);
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secondaryButton:hover {
+  background: rgba(0, 112, 243, 0.05);
+  transform: translateY(-3px);
+  border-color: #0070f3;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+  
+  .ctaContent {
+    padding: 30px 20px;
+  }
+  
+  .ctaTitle {
+    font-size: 2rem;
+  }
+  
+  .ctaButtons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .primaryButton, .secondaryButton {
+    width: 100%;
+  }
+}
+
+@keyframes textShine {
+  to {
+    background-position: 200% center;
+  }
+} 

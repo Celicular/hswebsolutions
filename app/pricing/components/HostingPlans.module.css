@@ -1,0 +1,766 @@
+.hostingPlans {
+  padding: 6rem 1.5rem;
+  width: 100%;
+  position: relative;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sectionTitle {
+  font-size: 2.8rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--link) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.sectionSubtitle {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 700px;
+  color: var(--secondary-text);
+}
+
+.categoryTabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.categoryTab {
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--secondary-text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+:global(.dark-mode) .categoryTab {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.categoryTab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  color: var(--foreground);
+}
+
+:global(.dark-mode) .categoryTab:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.activeTab {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--link) 100%);
+  color: white;
+  border: none;
+}
+
+.activeTab:hover {
+  color: white;
+}
+
+.plansContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  position: relative;
+}
+
+.planCard {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+:global(.dark-mode) .planCard {
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.planCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+:global(.dark-mode) .planCard:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.popularPlan {
+  transform: scale(1.05);
+  border: 2px solid var(--primary);
+  z-index: 1;
+}
+
+.popularPlan:hover {
+  transform: scale(1.05) translateY(-10px);
+}
+
+.popularBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--primary);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 2;
+}
+
+.planHeader {
+  padding: 2.5rem 2rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0.05) 100%);
+}
+
+.planName {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.planPrice {
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.currency {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.amount {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.period {
+  font-size: 1rem;
+  color: var(--secondary-text);
+}
+
+.planFeatures {
+  padding: 0 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-grow: 1;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: transform 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.featureItem:hover {
+  transform: translateX(5px);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+:global(.dark-mode) .featureItem:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.featureIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.featureLabel {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.featureValue {
+  margin-left: auto;
+  font-size: 0.95rem;
+  color: var(--foreground);
+}
+
+.planFooter {
+  padding: 1.5rem;
+  margin-top: auto;
+}
+
+.estimateBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(33, 150, 243, 0.4);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+:global(.dark-mode) .estimateBlock {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.estimateBlock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.estimateBlock:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+:global(.dark-mode) .estimateBlock:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.estimateBlock:hover::before {
+  transform: translateX(100%);
+}
+
+.compareFeatures {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.compareFeatures p {
+  font-size: 1.1rem;
+  color: var(--secondary-text);
+}
+
+.compareLink {
+  color: var(--link);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: all 0.2s ease;
+}
+
+.compareLink:hover {
+  color: var(--primary);
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+:global(.dark-mode) .modalOverlay {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 85vh;
+  background: var(--card-bg);
+  border-radius: 15px;
+  z-index: 10000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+:global(.dark-mode) .modal {
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
+
+.modalHeader {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+:global(.dark-mode) .modalHeader {
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.modalHeader h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--link) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-text);
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--foreground);
+}
+
+:global(.dark-mode) .closeButton:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.modalTabs {
+  display: flex;
+  padding: 1rem 2rem;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+:global(.dark-mode) .modalTabs {
+  border-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+.modalTab {
+  padding: 0.6rem 1.2rem;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--secondary-text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+:global(.dark-mode) .modalTab {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.modalTab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  color: var(--foreground);
+}
+
+:global(.dark-mode) .modalTab:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.activeModalTab {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--link) 100%);
+  color: white;
+  border: none;
+}
+
+.activeModalTab:hover {
+  color: white;
+}
+
+.modalContent {
+  padding: 0;
+  overflow-y: auto;
+  flex-grow: 1;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* Custom scrollbar for modal content */
+.modalContent::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modalContent::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 4px;
+}
+
+.modalContent::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+.modalContent::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+.comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.comparisonHeader {
+  position: sticky;
+  top: 0;
+  display: flex;
+  background-color: var(--card-bg);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  z-index: 5;
+}
+
+:global(.dark-mode) .comparisonHeader {
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.featureColumn {
+  width: 25%;
+  padding: 1.2rem 1.5rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+.planColumn {
+  flex: 1;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+:global(.dark-mode) .planColumn {
+  border-color: rgba(255, 255, 255, 0.03);
+}
+
+.comparisonHeader h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  position: relative;
+}
+
+.popularHeader {
+  color: var(--primary);
+}
+
+.modalPopularBadge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: var(--primary);
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  transform: scale(0.8);
+}
+
+.modalPrice {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.1rem;
+}
+
+.modalCurrency {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.modalAmount {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.modalPeriod {
+  font-size: 0.8rem;
+  color: var(--secondary-text);
+}
+
+.comparisonBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.comparisonRow {
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.comparisonRow:last-child {
+  border-bottom: none;
+}
+
+:global(.dark-mode) .comparisonRow {
+  border-color: rgba(255, 255, 255, 0.03);
+}
+
+.comparisonRow:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+:global(.dark-mode) .comparisonRow:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+.modalFooter {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--card-bg);
+}
+
+:global(.dark-mode) .modalFooter {
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.modalClose {
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--secondary-text);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+:global(.dark-mode) .modalClose {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.modalClose:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--foreground);
+}
+
+:global(.dark-mode) .modalClose:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.modalEstimateBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--link) 100%);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modalEstimateBlock:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Media queries for responsive design */
+@media screen and (max-width: 768px) {
+  .hostingPlans {
+    padding: 4rem 1.5rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2.2rem;
+  }
+  
+  .sectionSubtitle {
+    font-size: 1.1rem;
+  }
+  
+  .categoryTab {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .popularPlan {
+    transform: scale(1);
+  }
+  
+  .popularPlan:hover {
+    transform: translateY(-10px);
+  }
+  
+  .planName {
+    font-size: 1.6rem;
+  }
+  
+  .amount {
+    font-size: 2.8rem;
+  }
+  
+  .modal {
+    width: 95%;
+    max-height: 90vh;
+  }
+  
+  .modalHeader h3 {
+    font-size: 1.3rem;
+  }
+  
+  .featureColumn {
+    width: 35%;
+    padding: 1rem;
+  }
+  
+  .planColumn {
+    padding: 1rem 0.5rem;
+  }
+  
+  .modalAmount {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hostingPlans {
+    padding: 3rem 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+  
+  .categoryTabs {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    gap: 0.5rem;
+  }
+  
+  .categoryTab {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .planCard {
+    width: 100%;
+  }
+  
+  .planHeader {
+    padding: 2rem 1.5rem 1.2rem;
+  }
+  
+  .planName {
+    font-size: 1.4rem;
+  }
+  
+  .amount {
+    font-size: 2.5rem;
+  }
+  
+  .estimateBlock {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .modal {
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    top: 0;
+    left: 0;
+    transform: none !important;
+  }
+  
+  .modalTabs {
+    padding: 1rem;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+  
+  .modalTab {
+    white-space: nowrap;
+  }
+  
+  .comparisonTable {
+    font-size: 0.85rem;
+  }
+  
+  .featureColumn {
+    width: 40%;
+    padding: 0.8rem;
+  }
+  
+  .planColumn {
+    padding: 0.8rem 0.3rem;
+  }
+  
+  .modalFooter {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .modalClose, .modalEstimateBlock {
+    width: 100%;
+    text-align: center;
+  }
+} 

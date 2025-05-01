@@ -1,4 +1,4 @@
-import { executeQuery } from '@/app/lib/db';
+import { executeQuery } from '../../../db';
 import { NextResponse } from 'next/server';
 
 // PUT /api/admin/users/[id] - Update a user

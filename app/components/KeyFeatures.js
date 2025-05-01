@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import styles from './KeyFeatures.module.css';
+import SectionTitle from './SectionTitle';
 import { 
   FaDatabase, 
   FaShieldAlt, 
@@ -110,13 +111,11 @@ const KeyFeatures = () => {
       </div>
       
       <div className={styles.container}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Our Key Features</h2>
-          <p className={styles.sectionSubtitle}>
-            We always use the most avant-garde technology to design and develop your website and application. 
-            We work to unfold your success.
-          </p>
-        </div>
+        <SectionTitle 
+          title="Our Key Features"
+          subtitle="We always use the most avant-garde technology to design and develop your website and application. We work to unfold your success."
+          center={true}
+        />
         
         <motion.div 
           className={styles.featuresGrid}

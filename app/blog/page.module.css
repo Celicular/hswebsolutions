@@ -1,0 +1,151 @@
+.container {
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.main {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--background, #e0f2fe);
+}
+
+/* Loading animation */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--background, #121212);
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(103, 58, 183, 0.2);
+  border-radius: 50%;
+  border-top-color: #673AB7;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Light mode loading spinner */
+:global(.light-mode) .loadingSpinner {
+  border: 4px solid rgba(76, 175, 80, 0.2);
+  border-top-color: #4CAF50;
+}
+
+/* Loading container for Suspense fallbacks */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 300px;
+}
+
+/* Blog content section */
+.blogContent {
+  padding: 5rem 0;
+  background-color: var(--background, #e0f2fe);
+  position: relative;
+}
+
+.contentContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  color: var(--foreground, #333333);
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary, #4CAF50), var(--link, #2196F3));
+  border-radius: 4px;
+}
+
+.blogPostPlaceholder {
+  background-color: var(--card-bg, #FFFFFF);
+  border-radius: 1rem;
+  padding: 5rem 2rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  font-size: 1.2rem;
+  color: var(--secondary-text, #757575);
+}
+
+/* Dark mode adjustments */
+:global(.dark-mode) .main {
+  background-color: var(--background-darker, #0a1224);
+}
+
+:global(.dark-mode) .blogContent {
+  background-color: var(--background-darker, #0a1224);
+}
+
+:global(.dark-mode) .sectionTitle {
+  color: var(--foreground, #F5F5F5);
+}
+
+:global(.dark-mode) .blogPostPlaceholder {
+  background-color: var(--card-bg, #1e293b);
+  color: var(--secondary-text, #BBBBBB);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .blogContent {
+    padding: 3rem 0;
+  }
+  
+  .contentContainer {
+    padding: 0 1.5rem;
+  }
+  
+  .sectionTitle {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .blogPostPlaceholder {
+    padding: 3rem 1.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .blogContent {
+    padding: 2.5rem 0;
+  }
+  
+  .sectionTitle {
+    font-size: 1.75rem;
+  }
+  
+  .blogPostPlaceholder {
+    padding: 2.5rem 1rem;
+    font-size: 1rem;
+  }
+} 

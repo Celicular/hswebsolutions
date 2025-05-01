@@ -1,0 +1,309 @@
+.serviceCard {
+  background: var(--service-card-bg, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--service-card-border, rgba(255, 255, 255, 0.1));
+  border-radius: 16px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 25px var(--service-card-shadow, rgba(0, 0, 0, 0.15));
+}
+
+.serviceCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px var(--service-card-shadow, rgba(0, 0, 0, 0.15));
+  border-color: rgba(0, 161, 255, 0.3);
+}
+
+.serviceIcon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 161, 255, 0.1);
+  color: #00d7ff;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.serviceIcon svg {
+  width: 28px;
+  height: 28px;
+  stroke-width: 2;
+}
+
+.iconGlow {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  filter: blur(10px);
+  background: rgba(0, 215, 255, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.serviceCard:hover .iconGlow {
+  opacity: 1;
+}
+
+.serviceTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--foreground);
+}
+
+.serviceDescription {
+  color: var(--foreground-muted);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.serviceFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  border-top: 1px solid var(--service-card-border, rgba(255, 255, 255, 0.1));
+  padding-top: 20px;
+}
+
+.expandButton {
+  background: transparent;
+  color: #00d7ff;
+  border: 1px solid #00d7ff;
+  padding: 8px 15px;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.expandButton:hover {
+  background: rgba(0, 215, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.ctaButton {
+  background: linear-gradient(90deg, #00a1ff, #00d7ff);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ctaButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 161, 255, 0.3);
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background: var(--background-darker, #0a101f);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.3s ease forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--foreground-muted);
+}
+
+.closeButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+  color: var(--foreground);
+}
+
+.closeButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.modalTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--foreground);
+  padding-right: 40px;
+}
+
+.modalDescription {
+  color: var(--foreground-muted);
+  line-height: 1.7;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+.serviceSection {
+  margin-bottom: 30px;
+}
+
+.serviceSection h4 {
+  font-size: 1.25rem;
+  color: var(--foreground);
+  margin-bottom: 15px;
+  font-weight: 600;
+  position: relative;
+  padding-left: 15px;
+}
+
+.serviceSection h4::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 20px;
+  background: linear-gradient(90deg, #00a1ff, #00d7ff);
+  border-radius: 3px;
+}
+
+.serviceList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.serviceList li {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  color: var(--foreground-muted);
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.serviceList li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #00d7ff;
+  font-weight: 700;
+}
+
+.modalCtaButton {
+  background: linear-gradient(90deg, #00a1ff, #00d7ff);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.modalCtaButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 161, 255, 0.3);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .serviceFooter {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .expandButton, .ctaButton {
+    width: 48%;
+  }
+  
+  .modalContent {
+    padding: 20px;
+  }
+  
+  .modalTitle {
+    font-size: 1.75rem;
+  }
+  
+  .serviceSection h4 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 15px;
+  }
+  
+  .serviceList li {
+    font-size: 0.9rem;
+  }
+} 

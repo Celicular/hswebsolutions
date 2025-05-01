@@ -86,6 +86,9 @@ export default function Navbar() {
     if (window.createAnimatedBackgroundParticles) {
       window.createAnimatedBackgroundParticles();
     }
+    
+    // Dispatch a custom event for theme change detection
+    document.dispatchEvent(new CustomEvent('themeChanged', { detail: { lightMode: newMode } }));
   };
 
   const toggleSidebar = () => {
@@ -174,15 +177,18 @@ export default function Navbar() {
     e.preventDefault();
     
     if (validateForm()) {
-      // Form is valid, would normally submit data here
-      console.log('Form data:', formData);
-      setFormSubmitted(true);
+      // Close the sidebar
+      closeSidebar();
       
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setFormSubmitted(false);
-        setFormData({ name: '', email: '', mobile: '' });
-      }, 3000);
+      // Build URL with form data parameters
+      const queryParams = new URLSearchParams({
+        name: formData.name,
+        email: formData.email,
+        mobile: formData.mobile
+      }).toString();
+      
+      // Redirect to contact page with form data
+      window.location.href = `/contact?${queryParams}`;
     }
   };
 
@@ -209,10 +215,12 @@ export default function Navbar() {
         </div>
         
         <div className={styles.navCenter}>
-          <Link href="#services" className={styles.navLink}>Services</Link>
-          <Link href="#about" className={styles.navLink}>About Us</Link>
-          <Link href="#pricing" className={styles.navLink}>Pricing</Link>
-          <Link href="#blogs" className={styles.navLink}>Blogs</Link>
+          <Link href="/" className={styles.navLink}>Home</Link>
+          <Link href="/services" className={styles.navLink}>Services</Link>
+          <Link href="/about" className={styles.navLink}>About Us</Link>
+          <Link href="/pricing" className={styles.navLink}>Pricing</Link>
+          <Link href="/blog" className={styles.navLink}>Blogs</Link>
+          <Link href="/contact" className={styles.navLink}>Contact</Link>
           <Link href="#estimate" className={styles.estimateButton}>
             Estimate Project →
           </Link>
@@ -275,10 +283,12 @@ export default function Navbar() {
           />
           <span>HS Web Solutions</span>
         </div>
-        <Link href="#services" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Services</Link>
-        <Link href="#about" className={styles.mobileNavLink} onClick={toggleMobileMenu}>About Us</Link>
-        <Link href="#pricing" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Pricing</Link>
-        <Link href="#blogs" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Blogs</Link>
+        <Link href="/" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Home</Link>
+        <Link href="/services" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Services</Link>
+        <Link href="/about" className={styles.mobileNavLink} onClick={toggleMobileMenu}>About Us</Link>
+        <Link href="/pricing" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Pricing</Link>
+        <Link href="/blog" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Blogs</Link>
+        <Link href="/contact" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Contact</Link>
         <Link href="#estimate" className={styles.mobileEstimateButton} onClick={toggleMobileMenu}>
           Estimate Project →
         </Link>
@@ -361,27 +371,33 @@ export default function Navbar() {
           <h3 className={styles.formTitle}>Contact Information</h3>
           <div className={styles.contactItem}>
             <FaPhone />
-            <span>+1 234 567 8901</span>
+            <span>+91 9942868093</span>
           </div>
           <div className={styles.contactItem}>
             <FaEnvelope />
-            <span>info@hswebsolutions.com</span>
+            <span>hsg090907.jsr@gmail.com</span>
           </div>
           <div className={styles.contactItem}>
             <FaMapMarkerAlt />
-            <span>123 Business Avenue, New York, NY 10001</span>
+            <span>Adityapur, Jamshedpur<br />Jharkhand 831013, India</span>
+          </div>
+          
+          <div className={styles.businessHours}>
+            <h4>Business Hours</h4>
+            <p>Monday - Friday: 9AM - 5PM<br />Saturday & Sunday: Closed</p>
           </div>
           
           <div className={styles.mapContainer}>
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.15831228695!2d-74.11976235508171!3d40.69766374879398!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sus!4v1667544549096!5m2!1sen!2sus" 
+              src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.615154595861!2d86.16426066270446!3d22.77965911349691!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f5e4ba54d9a46d%3A0x943c1e78c8462838!2sAdharshila%20Tower!5e0!3m2!1sen!2sin!4v1746120762203!5m2!1sen!2sin${lightMode ? '' : '&style=dark'}`} 
               width="100%" 
               height="200" 
               style={{ border: 0 }} 
               allowFullScreen="" 
               loading="lazy" 
               referrerPolicy="no-referrer-when-downgrade"
-              title="Our location"
+              title="Adharshila Tower"
+              className={!lightMode ? styles.darkModeMap : ''}
             ></iframe>
           </div>
         </div>

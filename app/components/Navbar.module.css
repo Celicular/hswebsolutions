@@ -144,6 +144,8 @@
 .navLink:nth-child(2) { --index: 2; }
 .navLink:nth-child(3) { --index: 3; }
 .navLink:nth-child(4) { --index: 4; }
+.navLink:nth-child(5) { --index: 5; }
+.navLink:nth-child(6) { --index: 6; }
 
 .navLink::after {
   content: '';
@@ -182,7 +184,7 @@
   overflow: hidden;
   box-shadow: none;
   animation: fadeSlideIn 0.8s ease forwards;
-  animation-delay: 0.7s;
+  animation-delay: 0.9s;
   opacity: 0;
   transform: translateY(10px);
   z-index: 1;
@@ -445,6 +447,8 @@
 .mobileNavLink:nth-child(2) { --i: 2; }
 .mobileNavLink:nth-child(3) { --i: 3; }
 .mobileNavLink:nth-child(4) { --i: 4; }
+.mobileNavLink:nth-child(5) { --i: 5; }
+.mobileNavLink:nth-child(6) { --i: 6; }
 
 @keyframes mobileNavFade {
   0% {
@@ -715,8 +719,46 @@
 }
 
 .contactItem span {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.businessHours {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(0.5s + 3 * 0.1s);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.businessHours h4 {
+  margin: 0 0 8px 0;
   font-size: 1rem;
-  line-height: 1.5;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.businessHours p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+:global(.light-mode) .businessHours {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+:global(.light-mode) .businessHours h4 {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+:global(.light-mode) .businessHours p {
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .sidebarHeader {
@@ -733,22 +775,28 @@
 }
 
 .mapContainer {
-  border-radius: 15px;
+  width: 100%;
+  height: 200px;
+  margin-top: 25px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  margin-top: 1.5rem;
   position: relative;
-  animation: fadeSlideIn 0.8s ease forwards;
-  animation-delay: 0.8s;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(0.5s + 3 * 0.1s);
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  height: 180px;
+}
+
+.darkModeMap {
+  filter: invert(0.9) hue-rotate(180deg) brightness(0.85) contrast(1.2);
+  transition: filter 0.3s ease;
 }
 
 :global(.light-mode) .mapContainer {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 /* Overlay for when sidebar is open */

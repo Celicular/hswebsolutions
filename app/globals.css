@@ -20,6 +20,11 @@
   --particle-accent: rgba(59, 130, 246, 0.2);
   --hexagon-fill: rgba(59, 130, 246, 0.05);
   --hexagon-stroke: rgba(59, 130, 246, 0.1);
+  --scrollbar-thumb: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.3);
+  --scrollbar-track: rgba(0, 0, 0, 0.05);
+  --color-primary-rgb: 79, 70, 229;  /* Indigo color in RGB format */
+  --border-color-rgb: 229, 231, 235; /* Light gray in RGB format */
 }
 
 /* Dark mode variables */
@@ -37,6 +42,9 @@
   --particle-accent: rgba(59, 130, 246, 0.4);
   --hexagon-fill: rgba(59, 130, 246, 0.05);
   --hexagon-stroke: rgba(59, 130, 246, 0.1);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.2);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
+  --scrollbar-track: rgba(255, 255, 255, 0.05);
 }
 
 /* Base styles */
@@ -44,6 +52,8 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 html {
@@ -134,4 +144,34 @@ input, textarea, select {
 
 :root.dark-mode .module-background {
   background-color: #0f172a; /* Bluish dark background from WhyChooseUs */
+}
+
+/* Webkit browsers (Chrome, Safari, newer Edge) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+/* Modal specific scrollbar for the comparison content */
+.modalContent::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.modalContent::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 8px;
 }

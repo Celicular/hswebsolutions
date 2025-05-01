@@ -1,12 +1,14 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './CTABanner.module.css';
 import Link from 'next/link';
 
 const CTABanner = () => {
   const [visible, setVisible] = useState(false);
   const sectionRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -35,32 +37,12 @@ const CTABanner = () => {
 
   const handleContactClick = (e) => {
     e.preventDefault();
-    
-    // Use the globally exposed function from Navbar
-    if (typeof window !== 'undefined' && window.openContactSidebar) {
-      window.openContactSidebar();
-    } else {
-      // Fallback to clicking the button directly if function not available
-      const phoneButtons = document.querySelectorAll(`button[aria-label="Contact information"]`);
-      if (phoneButtons && phoneButtons.length > 0) {
-        phoneButtons[0].click();
-      }
-    }
+    router.push('/contact');
   };
 
   const handleGetStartedClick = (e) => {
     e.preventDefault();
-    // Scroll to the pricing section
-    const pricingSection = document.getElementById('pricing-section');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-      
-      // Add a highlight pulse effect to the pricing section
-      pricingSection.classList.add(styles.highlightPulse);
-      setTimeout(() => {
-        pricingSection.classList.remove(styles.highlightPulse);
-      }, 2000);
-    }
+    router.push('/services');
   };
 
   return (

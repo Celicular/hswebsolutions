@@ -1,0 +1,245 @@
+.blogCard {
+  position: relative;
+  height: 430px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--card-bg, #FFFFFF);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Glassmorphism effect */
+.blogCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.blogCard:hover::before {
+  opacity: 1;
+}
+
+.blogCard:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.cardLink {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Image container */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  transform: translateZ(20px);
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.blogCard:hover .image {
+  transform: scale(1.05);
+}
+
+/* Shine effect */
+.shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Tags */
+.tagContainer {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(var(--primary-rgb, 76, 175, 80), 0.9);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.tag:hover {
+  transform: translateY(-2px);
+}
+
+/* Content */
+.contentContainer {
+  position: relative;
+  padding: 20px;
+  height: calc(100% - 220px);
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--foreground, #333333);
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+
+.blogCard:hover .title {
+  color: var(--link, #2196F3);
+}
+
+.excerpt {
+  font-size: 0.95rem;
+  color: var(--secondary-text, #757575);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+/* Card footer with read more */
+.cardFooter {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.readMore {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--link, #2196F3);
+}
+
+.arrowIcon {
+  transition: transform 0.2s ease;
+}
+
+.blogCard:hover .arrowIcon {
+  transform: translateX(3px);
+}
+
+/* Dark mode adjustments */
+:global(.dark-mode) .blogCard {
+  background: var(--card-bg, #1e293b);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+:global(.dark-mode) .blogCard:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+:global(.dark-mode) .blogCard::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+:global(.dark-mode) .title {
+  color: var(--foreground, #F5F5F5);
+}
+
+:global(.dark-mode) .excerpt {
+  color: var(--secondary-text, #BBBBBB);
+}
+
+:global(.dark-mode) .readMore {
+  color: var(--link, #2196F3);
+}
+
+:global(.dark-mode) .tag {
+  background: rgba(var(--primary-rgb, 76, 175, 80), 0.8);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .blogCard {
+    height: 400px;
+  }
+  
+  .imageContainer {
+    height: 200px;
+  }
+  
+  .title {
+    font-size: 1.1rem;
+  }
+  
+  .excerpt {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 2;
+  }
+}
+
+@media (max-width: 576px) {
+  .blogCard {
+    height: 380px;
+  }
+  
+  .imageContainer {
+    height: 180px;
+  }
+  
+  .contentContainer {
+    padding: 16px;
+  }
+  
+  .title {
+    font-size: 1rem;
+  }
+  
+  .excerpt {
+    font-size: 0.85rem;
+  }
+} 

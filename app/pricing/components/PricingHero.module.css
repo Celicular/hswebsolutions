@@ -1,0 +1,241 @@
+.pricingHero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 0;
+  z-index: 1;
+}
+
+.backgroundContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.patternContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+}
+
+.pattern {
+  width: 100%;
+  height: 100%;
+  opacity: 0.95;
+}
+
+.glassmorphism {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.05);
+  z-index: 1;
+}
+
+:global(.dark-mode) .glassmorphism {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 1000px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.heroTitle {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--link) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.heroSubtitle {
+  font-size: 1.5rem;
+  max-width: 700px;
+  color: var(--foreground);
+  opacity: 0.9;
+}
+
+.ctaContainer {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.estimateBlock {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(33, 150, 243, 0.15) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.2rem 2.5rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--foreground);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+
+:global(.dark-mode) .estimateBlock {
+  border-color: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(33, 150, 243, 0.1) 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.estimateBlock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.estimateBlock:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+:global(.dark-mode) .estimateBlock:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.estimateBlock:hover::before {
+  transform: translateX(100%);
+}
+
+.estimateIcon {
+  width: 24px;
+  height: 24px;
+  stroke: var(--foreground);
+}
+
+/* Scroll indicator styles */
+.scrollIndicator {
+  position: absolute;
+  bottom: -10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--foreground);
+  opacity: 0.8;
+}
+
+.scrollIcon {
+  width: 30px;
+  height: 50px;
+  border: 2px solid var(--foreground);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.scrollIcon span {
+  width: 4px;
+  height: 8px;
+  background-color: var(--foreground);
+  border-radius: 2px;
+  animation: scrollAnimation 2s infinite ease-in-out;
+}
+
+.scrollIndicator p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  animation: fadeInOut 2s infinite ease-in-out;
+}
+
+@keyframes scrollAnimation {
+  0% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Media queries for responsive design */
+@media screen and (max-width: 768px) {
+  .pricingHero {
+    height: 100vh;
+  }
+  
+  .heroTitle {
+    font-size: 3rem;
+  }
+  
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .heroTitle {
+    font-size: 2.2rem;
+  }
+  
+  .heroSubtitle {
+    font-size: 1.1rem;
+  }
+  
+  .estimateBlock {
+    padding: 1rem 1.8rem;
+    font-size: 1rem;
+  }
+} 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import styles from './ProcessFlowchart.module.css';
@@ -99,25 +99,14 @@ const ProcessFlowchart = () => {
       
       // Small delay to ensure DOM is ready
       const timer = setTimeout(() => {
-        if (inView && !hasDrawnLine.current) {
+        if (!hasDrawnLine.current) {
           animateConnectingLine();
         }
-      }, 100);
+      }, 300);
       
       return () => clearTimeout(timer);
     }
   }, [controls, inView, isMobile]);
-
-  // Use useLayoutEffect to recalculate line position after component layout
-  useLayoutEffect(() => {
-    if (inView && !hasDrawnLine.current) {
-      const timer = setTimeout(() => {
-        animateConnectingLine();
-      }, 100); // Small delay to ensure rendering is complete
-      
-      return () => clearTimeout(timer);
-    }
-  }, [inView]);
 
   // Animate connecting line between steps with optimizations
   const animateConnectingLine = () => {

@@ -1,14 +1,35 @@
 import { NextResponse } from 'next/server';
-import { executeQuery } from '../db';
+import { executeQuery } from '../db.js';
 
 export async function POST(request) {
+  let transaction = false;
+  
   try {
-    // Parse the request body
-    const formData = await request.json();
+    // Parse the request body with error handling
+    let formData;
+    try {
+      formData = await request.json();
+    } catch (error) {
+      console.error('Error parsing request body:', error);
+      return NextResponse.json(
+        { error: 'Invalid request format' },
+        { status: 400 }
+      );
+    }
+    
+    // Validate required fields
+    const requiredFields = ['name', 'email'];
+    for (const field of requiredFields) {
+      if (!formData[field]) {
+        return NextResponse.json(
+          { error: `Missing required field: ${field}` },
+          { status: 400 }
+        );
+      }
+    }
     
     // Log received data for debugging
-    console.log('Estimate form submission received:');
-    console.log('Basic Info:', {
+    console.log('Estimate form submission received:', {
       name: formData.name,
       businessName: formData.businessName,
       email: formData.email,
@@ -17,9 +38,24 @@ export async function POST(request) {
       socialHandles: formData.socialHandles
     });
     
-    // Start a database transaction
-    const conn = await executeQuery({ query: 'START TRANSACTION' });
-    
+    // Start a database transaction with retry logic
+    try {
+      await executeQuery({ query: 'START TRANSACTION' });
+      transaction = true;
+    } catch (error) {
+      console.error('Error starting transaction:', error);
+      if (error.code === 'ETIMEDOUT') {
+        return NextResponse.json(
+          { error: 'Database connection timeout. Please try again.' },
+          { status: 503 }
+        );
+      }
+      return NextResponse.json(
+        { error: 'Database connection error. Please try again later.' },
+        { status: 503 }
+      );
+    }
+
     try {
       // 1. Insert main submission data
       const insertSubmissionResult = await executeQuery({
@@ -54,68 +90,92 @@ export async function POST(request) {
       
       const submissionId = insertSubmissionResult.insertId;
       
-      // 2. Insert social handles
-      if (formData.socialHandles && formData.socialHandles.length > 0) {
-        for (const handle of formData.socialHandles) {
-          if (handle.platform && handle.handle) {
-            await executeQuery({
-              query: 'INSERT INTO social_handles (estimate_id, platform, handle) VALUES (?, ?, ?)',
-              values: [submissionId, handle.platform, handle.handle]
-            });
-          }
+      // 2. Insert social handles with validation
+      if (formData.socialHandles && Array.isArray(formData.socialHandles)) {
+        const validHandles = formData.socialHandles.filter(
+          handle => handle && handle.platform && handle.handle
+        );
+        
+        for (const handle of validHandles) {
+          await executeQuery({
+            query: 'INSERT INTO social_handles (estimate_id, platform, handle) VALUES (?, ?, ?)',
+            values: [submissionId, handle.platform, handle.handle]
+          });
         }
       }
       
-      // 3. Insert frontend technologies
-      if (formData.frontendStack && formData.frontendStack.length > 0) {
-        for (const tech of formData.frontendStack) {
-          // Get tech ID from name
-          const techResult = await executeQuery({
-            query: 'SELECT id FROM frontend_technologies WHERE tech_name = ?',
-            values: [tech]
+      // 3. Insert frontend technologies with validation and better error handling
+      if (formData.frontendStack && Array.isArray(formData.frontendStack)) {
+        console.log('Processing frontend technologies:', formData.frontendStack);
+        
+        // First, get all technologies in one query
+        const allTechnologies = await executeQuery({
+          query: 'SELECT id, tech_name FROM frontend_technologies WHERE tech_name IN (?)',
+          values: [formData.frontendStack.filter(t => t)]
+        });
+        console.log('Found technologies:', allTechnologies);
+        
+        // Create a map for quick lookup
+        const techMap = new Map(
+          allTechnologies.map(tech => [tech.tech_name.toLowerCase(), tech.id])
+        );
+        
+        // Prepare all inserts
+        const validTechs = formData.frontendStack
+          .filter(tech => tech && techMap.has(tech.toLowerCase()))
+          .map(tech => [submissionId, techMap.get(tech.toLowerCase())]);
+        
+        if (validTechs.length > 0) {
+          console.log('Inserting technology relations:', validTechs);
+          
+          // Insert all relationships in one query
+          await executeQuery({
+            query: 'INSERT INTO submission_frontend (submission_id, tech_id) VALUES ?',
+            values: [validTechs]
           });
           
-          if (techResult.length > 0) {
-            await executeQuery({
-              query: 'INSERT INTO submission_frontend (submission_id, tech_id) VALUES (?, ?)',
-              values: [submissionId, techResult[0].id]
-            });
-          }
+          console.log('Successfully inserted all frontend technology relations');
+        } else {
+          console.log('No valid technologies found to insert');
         }
       }
       
-      // 4. Insert integrations
-      if (formData.integrations && formData.integrations.length > 0) {
-        for (const integration of formData.integrations) {
-          // Get integration ID from name
-          const integrationResult = await executeQuery({
-            query: 'SELECT id FROM integrations WHERE integration_name = ?',
-            values: [integration]
+      // 4. Insert integrations with validation
+      if (formData.integrations && Array.isArray(formData.integrations)) {
+        const integrationPromises = formData.integrations
+          .filter(integration => integration)
+          .map(async integration => {
+            const integrationResult = await executeQuery({
+              query: 'SELECT id FROM integrations WHERE integration_name = ?',
+              values: [integration]
+            });
+            
+            if (integrationResult.length > 0) {
+              return executeQuery({
+                query: 'INSERT INTO submission_integrations (submission_id, integration_id) VALUES (?, ?)',
+                values: [submissionId, integrationResult[0].id]
+              });
+            }
           });
-          
-          if (integrationResult.length > 0) {
-            await executeQuery({
-              query: 'INSERT INTO submission_integrations (submission_id, integration_id) VALUES (?, ?)',
-              values: [submissionId, integrationResult[0].id]
-            });
-          }
-        }
+        
+        await Promise.all(integrationPromises);
       }
       
-      // 5. Insert payment gateway options
-      if (formData.paymentGateway) {
+      // 5. Insert payment gateway options with validation
+      if (formData.paymentGateway && typeof formData.paymentGateway === 'object') {
         await executeQuery({
           query: 'INSERT INTO payment_gateway_options (estimate_id, enabled, gateway) VALUES (?, ?, ?)',
           values: [
             submissionId, 
             formData.paymentGateway.enabled ? 1 : 0,
-            formData.paymentGateway.enabled ? formData.paymentGateway.gateway : null
+            formData.paymentGateway.enabled && formData.paymentGateway.gateway ? 
+              formData.paymentGateway.gateway : null
           ]
         });
       }
       
-      // 6. Insert Google Ads information
-      if (formData.googleAds) {
+      // 6. Insert Google Ads information with validation
+      if (formData.googleAds && typeof formData.googleAds === 'object') {
         await executeQuery({
           query: `
             INSERT INTO google_ads_info (
@@ -137,12 +197,16 @@ export async function POST(request) {
       }
       
       // Commit the transaction
-      await executeQuery({ query: 'COMMIT' });
+      if (transaction) {
+        try {
+          await executeQuery({ query: 'COMMIT' });
+        } catch (commitError) {
+          console.error('Error committing transaction:', commitError);
+          throw commitError;
+        }
+      }
       
       console.log(`Successfully stored estimate submission with ID: ${submissionId}`);
-      
-      // Simulate a short delay to make the loading state visible
-      await new Promise(resolve => setTimeout(resolve, 1000));
       
       return NextResponse.json({ 
         success: true,
@@ -152,8 +216,29 @@ export async function POST(request) {
       
     } catch (dbError) {
       // Rollback in case of any error
-      await executeQuery({ query: 'ROLLBACK' });
+      if (transaction) {
+        try {
+          await executeQuery({ query: 'ROLLBACK' });
+        } catch (rollbackError) {
+          console.error('Error rolling back transaction:', rollbackError);
+        }
+      }
+      
       console.error('Database error:', dbError);
+      
+      // Handle specific database errors
+      if (dbError.code === 'ER_DUP_ENTRY') {
+        return NextResponse.json(
+          { error: 'This submission already exists.' },
+          { status: 409 }
+        );
+      } else if (dbError.code === 'ER_NO_REFERENCED_ROW') {
+        return NextResponse.json(
+          { error: 'Invalid reference data in submission.' },
+          { status: 400 }
+        );
+      }
+      
       throw dbError;
     }
     
@@ -169,13 +254,14 @@ export async function POST(request) {
       sqlMessage: error.sqlMessage
     });
     
+    // Return appropriate error message based on environment
     return NextResponse.json(
       { 
         success: false,
         message: 'There was an error processing your request',
-        error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
       },
       { status: 500 }
     );
   }
-} 
+}

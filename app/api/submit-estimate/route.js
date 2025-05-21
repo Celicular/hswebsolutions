@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { executeQuery } from '../db.js';
+import { executeQuery } from '../db';
+const sendDiscordDM = require('../../utils/sendDiscordDM');
 
 export async function POST(request) {
   let transaction = false;
@@ -201,9 +202,18 @@ export async function POST(request) {
         try {
           await executeQuery({ query: 'COMMIT' });
         } catch (commitError) {
-          console.error('Error committing transaction:', commitError);
           throw commitError;
         }
+      }
+      
+      // Send Discord DM using the REST API utility
+      try {
+        await sendDiscordDM(
+          `New estimate from ${formData.name} (${formData.email})!\nCheck: ${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/admin/`
+        );
+        console.log('DM sent successfully!');
+      } catch (err) {
+        console.error('Failed to send DM:', err);
       }
       
       console.log(`Successfully stored estimate submission with ID: ${submissionId}`);

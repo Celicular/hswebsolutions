@@ -1,15 +1,18 @@
 'use client';
 
+// Configure segment behavior
+export const runtime = 'edge';
+export const preferredRegion = 'auto';
+export const dynamicConfig = 'force-dynamic';
+
 import { useState, useEffect, lazy, Suspense } from 'react';
 import styles from './page.module.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
-
-// Lazy load heavier components for better initial load time
-// Use dynamic import with next/dynamic instead of React.lazy for Next.js
 import dynamic from 'next/dynamic';
 
+// Lazy load heavier components for better initial load time
 const ProcessFlowchart = dynamic(() => import('./components/ProcessFlowchart'), { ssr: false });
 const StatsCounter = dynamic(() => import('./components/StatsCounter'), { ssr: false });
 const KeyFeatures = dynamic(() => import('./components/KeyFeatures'), { ssr: false });

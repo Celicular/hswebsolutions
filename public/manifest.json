@@ -1,0 +1,26 @@
+{
+  "name": "HS Web Solutions",
+  "short_name": "HSWeb",
+  "description": "Professional web development services",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#673AB7",
+  "icons": [
+    {
+      "src": "/H.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/images/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

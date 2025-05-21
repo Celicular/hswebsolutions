@@ -221,7 +221,7 @@ export default function Navbar() {
           <Link href="/pricing" className={styles.navLink}>Pricing</Link>
           <Link href="/blog" className={styles.navLink}>Blogs</Link>
           <Link href="/contact" className={styles.navLink}>Contact</Link>
-          <Link href="#estimate" className={styles.estimateButton}>
+          <Link href="/contact" className={styles.estimateButton}>
             Estimate Project →
           </Link>
         </div>
@@ -289,7 +289,7 @@ export default function Navbar() {
         <Link href="/pricing" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Pricing</Link>
         <Link href="/blog" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Blogs</Link>
         <Link href="/contact" className={styles.mobileNavLink} onClick={toggleMobileMenu}>Contact</Link>
-        <Link href="#estimate" className={styles.mobileEstimateButton} onClick={toggleMobileMenu}>
+        <Link href="/contact" className={styles.mobileEstimateButton} onClick={toggleMobileMenu}>
           Estimate Project →
         </Link>
       </div>

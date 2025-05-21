@@ -7,10 +7,10 @@ async function testConnection() {
   
   try {
     console.log('Trying to connect to database...');
-    
-    // Try to connect without database specified first
+      // Try to connect without database specified first
     connection = await mysql.createConnection({
       host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT, 10),
       user: process.env.DB_USER,
       password: process.env.DB_PASS
     });

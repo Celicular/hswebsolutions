@@ -3,7 +3,7 @@
 // Configure segment behavior
 export const runtime = 'edge';
 export const preferredRegion = 'auto';
-export const dynamicConfig = 'force-dynamic';
+
 
 import { useState, useEffect, lazy, Suspense } from 'react';
 import styles from './page.module.css';

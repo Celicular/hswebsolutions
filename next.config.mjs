@@ -18,9 +18,6 @@ const nextConfig = {
       'framer-motion'
     ]
   },
-  turbopack: {
-    enabled: true
-  },
 
   // Enable image optimization
   images: {

@@ -114,7 +114,7 @@ const Footer = () => {
           <div className={styles.brandSection}>
             <div className={styles.logoWrapper}>
               <Image 
-                src="/h.ico" 
+                src="/H.ico" 
                 alt="HS Logo" 
                 width={50} 
                 height={50} 

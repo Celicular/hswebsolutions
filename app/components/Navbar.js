@@ -203,7 +203,7 @@ export default function Navbar() {
         <div className={styles.navLeft}>
           <div className={styles.logo}>
             <Image 
-              src="/h.ico" 
+              src="/H.ico" 
               alt="HS Logo" 
               width={39} 
               height={39} 
@@ -275,7 +275,7 @@ export default function Navbar() {
       <div className={styles.mobileMenu}>
         <div className={styles.mobileMenuHeader}>
           <Image 
-            src="/h.ico" 
+            src="/H.ico" 
             alt="HS Logo" 
             width={31} 
             height={31} 
@@ -306,7 +306,7 @@ export default function Navbar() {
         <div className={styles.sidebarContent}>
           <div className={styles.sidebarHeader}>
             <Image 
-              src="/h.ico" 
+              src="/H.ico" 
               alt="HS Logo" 
               width={39} 
               height={39} 

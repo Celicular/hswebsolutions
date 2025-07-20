@@ -20,11 +20,11 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "HS Web Solutions",
   description: "Professional web development services",
-  metadataBase: new URL('https://hswebsolutions.com'),
+  metadataBase: new URL('https://hswebsolution.onrender.com'),
   icons: {
-    icon: '/h.ico',
-    shortcut: '/h.ico',
-    apple: '/h.ico',
+    icon: '/H.ico',
+    shortcut: '/H.ico',
+    apple: '/H.ico',
   },
   viewport: {
     width: 'device-width',
@@ -49,11 +49,11 @@ export const metadata = {
   openGraph: {
     title: 'HS Web Solutions',
     description: 'Professional web development services',
-    url: 'https://hswebsolutions.com',
+    url: 'https://hswebsolution.onrender.com',
     siteName: 'HS Web Solutions',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: 'https://hswebsolution.onrender.com/og-image.png',
         width: 1200,
         height: 630,
       },

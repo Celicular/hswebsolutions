@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
-import { FaEnvelope } from 'react-icons/fa';
-import styles from './Invoices.module.css';
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileInvoiceDollar } from "@fortawesome/free-solid-svg-icons";
+import { FaEnvelope } from "react-icons/fa";
+import styles from "./Invoices.module.css";
 
 export default function Invoices() {
   return (
@@ -29,7 +29,10 @@ export default function Invoices() {
         >
           <div className={styles.invoiceBox}>
             <div className={styles.invoiceHeader}>
-              <FontAwesomeIcon icon={faFileInvoiceDollar} className={styles.headerIcon} />
+              <FontAwesomeIcon
+                icon={faFileInvoiceDollar}
+                className={styles.headerIcon}
+              />
               <h3 className={styles.boxTitle}>Official Invoices Issued For:</h3>
             </div>
 
@@ -44,7 +47,10 @@ export default function Invoices() {
 
             <div className={styles.contactSection}>
               <h4 className={styles.contactTitle}>To Request a New Invoice:</h4>
-              <a href="mailto:hsg090907.jsr@gmail.com" className={styles.contactLink}>
+              <a
+                href="mailto:hsg090907.jsr@gmail.com"
+                className={styles.contactLink}
+              >
                 <FaEnvelope className={styles.contactIcon} />
                 hsg090907.jsr@gmail.com
               </a>

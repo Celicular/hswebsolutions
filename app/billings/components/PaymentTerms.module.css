@@ -93,7 +93,7 @@
 }
 
 .termsList li::before {
-  content: '✓';
+  content: "✓";
   position: absolute;
   left: 0;
   color: var(--primary);
@@ -118,7 +118,11 @@
 }
 
 .highlight {
-  background: linear-gradient(135deg, rgba(33, 150, 243, 0.05), rgba(255, 152, 0, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(33, 150, 243, 0.05),
+    rgba(255, 152, 0, 0.05)
+  );
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1.5rem;
@@ -127,7 +131,11 @@
 }
 
 :global(.dark-mode) .highlight {
-  background: linear-gradient(135deg, rgba(33, 150, 243, 0.08), rgba(255, 152, 0, 0.08));
+  background: linear-gradient(
+    135deg,
+    rgba(33, 150, 243, 0.08),
+    rgba(255, 152, 0, 0.08)
+  );
 }
 
 .highlightText {

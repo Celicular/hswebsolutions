@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faEnvelope, faClock } from '@fortawesome/free-solid-svg-icons';
-import styles from './BillingSupport.module.css';
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPhone,
+  faEnvelope,
+  faClock,
+} from "@fortawesome/free-solid-svg-icons";
+import styles from "./BillingSupport.module.css";
 
 export default function BillingSupport() {
   const containerVariants = {
@@ -24,25 +28,25 @@ export default function BillingSupport() {
   const supportChannels = [
     {
       icon: faEnvelope,
-      title: 'Email',
-      value: 'hsg090907.jsr@gmail.com',
-      href: 'mailto:hsg090907.jsr@gmail.com',
-      isLink: true
+      title: "Email",
+      value: "hsg090907.jsr@gmail.com",
+      href: "mailto:hsg090907.jsr@gmail.com",
+      isLink: true,
     },
     {
       icon: faPhone,
-      title: 'Phone',
-      value: '+91 9942868093',
-      href: 'tel:+919942868093',
-      isLink: true
+      title: "Phone",
+      value: "+91 9942868093",
+      href: "tel:+919942868093",
+      isLink: true,
     },
     {
       icon: faClock,
-      title: 'Business Hours',
-      value: 'Monday - Friday: 9AM - 5PM',
+      title: "Business Hours",
+      value: "Monday - Friday: 9AM - 5PM",
       href: null,
-      isLink: false
-    }
+      isLink: false,
+    },
   ];
 
   return (
@@ -56,7 +60,9 @@ export default function BillingSupport() {
           className={styles.sectionHeader}
         >
           <h2 className={styles.sectionTitle}>Billing Support</h2>
-          <p className={styles.sectionSubtitle}>For any payment or invoice-related queries</p>
+          <p className={styles.sectionSubtitle}>
+            For any payment or invoice-related queries
+          </p>
         </motion.div>
 
         <motion.div
@@ -67,7 +73,11 @@ export default function BillingSupport() {
           viewport={{ once: true }}
         >
           {supportChannels.map((channel, index) => (
-            <motion.div key={index} className={styles.supportCard} variants={itemVariants}>
+            <motion.div
+              key={index}
+              className={styles.supportCard}
+              variants={itemVariants}
+            >
               <div className={styles.cardIcon}>
                 <FontAwesomeIcon icon={channel.icon} />
               </div>
@@ -92,14 +102,21 @@ export default function BillingSupport() {
         >
           <h3 className={styles.ctaTitle}>Need Help With Your Payment?</h3>
           <p className={styles.ctaText}>
-            Our billing team is ready to assist you with any questions or concerns about your payment.
+            Our billing team is ready to assist you with any questions or
+            concerns about your payment.
           </p>
           <div className={styles.ctaButtons}>
-            <a href="mailto:hsg090907.jsr@gmail.com" className={styles.ctaButton + ' ' + styles.emailButton}>
+            <a
+              href="mailto:hsg090907.jsr@gmail.com"
+              className={styles.ctaButton + " " + styles.emailButton}
+            >
               <FontAwesomeIcon icon={faEnvelope} />
               Send Email
             </a>
-            <a href="tel:+919942868093" className={styles.ctaButton + ' ' + styles.phoneButton}>
+            <a
+              href="tel:+919942868093"
+              className={styles.ctaButton + " " + styles.phoneButton}
+            >
               <FontAwesomeIcon icon={faPhone} />
               Call Now
             </a>

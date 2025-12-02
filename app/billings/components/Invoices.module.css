@@ -89,7 +89,7 @@
 }
 
 .invoiceList li::before {
-  content: '•';
+  content: "•";
   position: absolute;
   left: 0;
   color: var(--link);
@@ -123,7 +123,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.875rem 1.5rem;
-  background: linear-gradient(135deg, var(--link), #1565C0);
+  background: linear-gradient(135deg, var(--link), #1565c0);
   color: white;
   border: none;
   border-radius: 8px;

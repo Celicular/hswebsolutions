@@ -5,7 +5,11 @@
   align-items: center;
   justify-content: center;
   padding: 6rem 2rem;
-  background: linear-gradient(135deg, var(--background) 0%, var(--background-darker) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--background) 0%,
+    var(--background-darker) 100%
+  );
   overflow: hidden;
   transition: background 0.3s ease;
 }
@@ -46,7 +50,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) translateX(0px);
   }
   50% {

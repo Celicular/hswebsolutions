@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHandshake } from '@fortawesome/free-solid-svg-icons';
-import styles from './PaymentTerms.module.css';
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHandshake } from "@fortawesome/free-solid-svg-icons";
+import styles from "./PaymentTerms.module.css";
 
 export default function PaymentTerms() {
   const containerVariants = {
@@ -22,10 +22,10 @@ export default function PaymentTerms() {
   };
 
   const terms = [
-    '50% advance to begin development',
-    '50% on final delivery',
-    'Hosting and maintenance are billed annually',
-    'All payments are non-refundable after project initiation.'
+    "50% advance to begin development",
+    "50% on final delivery",
+    "Hosting and maintenance are billed annually",
+    "All payments are non-refundable after project initiation.",
   ];
 
   return (
@@ -39,7 +39,9 @@ export default function PaymentTerms() {
           className={styles.sectionHeader}
         >
           <h2 className={styles.sectionTitle}>Payment Terms</h2>
-          <p className={styles.sectionSubtitle}>Our standard payment structure for projects</p>
+          <p className={styles.sectionSubtitle}>
+            Our standard payment structure for projects
+          </p>
         </motion.div>
 
         <motion.div
@@ -70,7 +72,8 @@ export default function PaymentTerms() {
 
           <div className={styles.highlight}>
             <p className={styles.highlightText}>
-              These terms ensure fair practices for both our clients and our development team.
+              These terms ensure fair practices for both our clients and our
+              development team.
             </p>
           </div>
         </motion.div>

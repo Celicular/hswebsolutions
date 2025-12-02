@@ -1,6 +1,10 @@
 .section {
   position: relative;
-  background: linear-gradient(135deg, var(--background) 0%, var(--background-darker) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--background) 0%,
+    var(--background-darker) 100%
+  );
   padding: 4rem 2rem;
   transition: background 0.3s ease;
 }

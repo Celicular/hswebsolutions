@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaypal } from '@fortawesome/free-brands-svg-icons';
-import { faBuilding } from '@fortawesome/free-solid-svg-icons';
-import { FaArrowRight } from 'react-icons/fa';
-import styles from './PaymentMethods.module.css';
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaypal } from "@fortawesome/free-brands-svg-icons";
+import { faBuilding, faLandmark } from "@fortawesome/free-solid-svg-icons";
+import { FaArrowRight } from "react-icons/fa";
+import styles from "./PaymentMethods.module.css";
 
 export default function PaymentMethods() {
   const containerVariants = {
@@ -34,7 +34,9 @@ export default function PaymentMethods() {
           className={styles.sectionHeader}
         >
           <h2 className={styles.sectionTitle}>Accepted Payment Methods</h2>
-          <p className={styles.sectionSubtitle}>Choose the payment method that works best for you</p>
+          <p className={styles.sectionSubtitle}>
+            Choose the payment method that works best for you
+          </p>
         </motion.div>
 
         <motion.div
@@ -44,35 +46,60 @@ export default function PaymentMethods() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {/* PayPal Method */}
-          <motion.div className={styles.methodCard} variants={itemVariants}>
+          {/* PayPal Method - Disabled */}
+          <motion.div
+            className={`${styles.methodCard} ${styles.disabled}`}
+            variants={itemVariants}
+          >
+            <div className={styles.disabledBadge}>Not Working Currently</div>
             <div className={styles.methodHeader}>
               <div className={styles.iconWrapper}>
                 <FontAwesomeIcon icon={faPaypal} className={styles.icon} />
               </div>
-              <h3 className={styles.methodTitle}>PayPal (Recommended for International)</h3>
+              <h3 className={styles.methodTitle}>
+                PayPal (Temporarily Unavailable)
+              </h3>
             </div>
 
             <div className={styles.methodContent}>
               <p className={styles.methodDescription}>
-                Secure online payment for global clients.
+                PayPal payments are temporarily unavailable. Please use Razorpay
+                or Bank Transfer instead.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Razorpay Method */}
+          <motion.div className={styles.methodCard} variants={itemVariants}>
+            <div className={styles.methodHeader}>
+              <div className={styles.iconWrapper + " " + styles.razorpayIcon}>
+                <span className={styles.razorpayText}>₹</span>
+              </div>
+              <h3 className={styles.methodTitle}>Razorpay (Recommended)</h3>
+            </div>
+
+            <div className={styles.methodContent}>
+              <p className={styles.methodDescription}>
+                Fast and secure payment for Indian and international clients.
               </p>
 
               <div className={styles.methodDetails}>
-                <h4 className={styles.detailsTitle}>PayPal Payment Link:</h4>
+                <h4 className={styles.detailsTitle}>Razorpay Payment Link:</h4>
                 <a
-                  href="https://www.paypal.me/hswebsols"
+                  href="https://razorpay.me/@himadrishekhargoswami"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={styles.paypalButton}
+                  className={styles.razorpayButton}
                 >
                   <FaArrowRight className={styles.buttonIcon} />
-                  https://www.paypal.me/hswebsols
+                  https://razorpay.me/@himadrishekhargoswami
                 </a>
 
-                <h4 className={styles.detailsTitle}>Accepted Currencies:</h4>
+                <h4 className={styles.detailsTitle}>
+                  Accepted Payment Methods:
+                </h4>
                 <p className={styles.currencyList}>
-                  USD, AED, INR, and all major global currencies.
+                  UPI, Cards, Netbanking, Wallets, and international payments.
                 </p>
               </div>
             </div>
@@ -84,7 +111,9 @@ export default function PaymentMethods() {
               <div className={styles.iconWrapper}>
                 <FontAwesomeIcon icon={faBuilding} className={styles.icon} />
               </div>
-              <h3 className={styles.methodTitle}>Bank Transfer (International & Domestic)</h3>
+              <h3 className={styles.methodTitle}>
+                Bank Transfer (International & Domestic)
+              </h3>
             </div>
 
             <div className={styles.methodContent}>
@@ -100,7 +129,9 @@ export default function PaymentMethods() {
                   </div>
                   <div className={styles.bankDetail}>
                     <span className={styles.bankLabel}>Account Holder:</span>
-                    <span className={styles.bankValue}>Himadri Shekhar Goswami</span>
+                    <span className={styles.bankValue}>
+                      Himadri Shekhar Goswami
+                    </span>
                   </div>
                   <div className={styles.bankDetail}>
                     <span className={styles.bankLabel}>Account Number:</span>

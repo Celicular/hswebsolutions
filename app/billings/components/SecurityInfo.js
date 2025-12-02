@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faShieldAlt, faCreditCard } from '@fortawesome/free-solid-svg-icons';
-import styles from './SecurityInfo.module.css';
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLock,
+  faShieldAlt,
+  faCreditCard,
+} from "@fortawesome/free-solid-svg-icons";
+import styles from "./SecurityInfo.module.css";
 
 export default function SecurityInfo() {
   const containerVariants = {
@@ -24,19 +28,22 @@ export default function SecurityInfo() {
   const securityMethods = [
     {
       icon: faLock,
-      title: 'Encrypted PayPal Payments',
-      description: 'All PayPal transactions use industry-standard encryption for maximum security.'
+      title: "Encrypted PayPal Payments",
+      description:
+        "All PayPal transactions use industry-standard encryption for maximum security.",
     },
     {
       icon: faShieldAlt,
-      title: 'Verified Bank Transactions',
-      description: 'Direct bank transfers are verified and fully compliant with international banking standards.'
+      title: "Verified Bank Transactions",
+      description:
+        "Direct bank transfers are verified and fully compliant with international banking standards.",
     },
     {
       icon: faCreditCard,
-      title: 'No Third-Party Wallet Apps',
-      description: 'We do not accept PhonePe, UPI, or other third-party wallet applications for payment security.'
-    }
+      title: "No Third-Party Wallet Apps",
+      description:
+        "We do not accept PhonePe, UPI, or other third-party wallet applications for payment security.",
+    },
   ];
 
   return (
@@ -50,7 +57,9 @@ export default function SecurityInfo() {
           className={styles.sectionHeader}
         >
           <h2 className={styles.sectionTitle}>Payment Security</h2>
-          <p className={styles.sectionSubtitle}>We use secure, globally compliant methods</p>
+          <p className={styles.sectionSubtitle}>
+            We use secure, globally compliant methods
+          </p>
         </motion.div>
 
         <motion.div
@@ -61,7 +70,11 @@ export default function SecurityInfo() {
           viewport={{ once: true }}
         >
           {securityMethods.map((method, index) => (
-            <motion.div key={index} className={styles.securityCard} variants={itemVariants}>
+            <motion.div
+              key={index}
+              className={styles.securityCard}
+              variants={itemVariants}
+            >
               <div className={styles.cardIcon}>
                 <FontAwesomeIcon icon={method.icon} />
               </div>
@@ -79,8 +92,9 @@ export default function SecurityInfo() {
           viewport={{ once: true }}
         >
           <p className={styles.trustText}>
-            Your financial information is protected by the highest standards of security and compliance.
-            We prioritize your data safety with every transaction.
+            Your financial information is protected by the highest standards of
+            security and compliance. We prioritize your data safety with every
+            transaction.
           </p>
         </motion.div>
       </div>

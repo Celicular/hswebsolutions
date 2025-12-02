@@ -43,10 +43,36 @@
   padding: 2rem;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
 }
 
 :global(.dark-mode) .methodCard {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.methodCard.disabled {
+  opacity: 0.6;
+  background: var(--input-bg);
+  border-color: #999;
+}
+
+.methodCard.disabled:hover {
+  transform: none;
+  border-color: #999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.disabledBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #999;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 10;
 }
 
 .methodCard:hover {
@@ -119,7 +145,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.875rem 1.5rem;
-  background: linear-gradient(135deg, var(--link), #1565C0);
+  background: linear-gradient(135deg, var(--link), #1565c0);
   color: white;
   border: none;
   border-radius: 8px;
@@ -138,6 +164,43 @@
 
 .paypalButton:active {
   transform: translateY(0);
+}
+
+.razorpayButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #528fff, #3f4aa6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(82, 143, 255, 0.3);
+}
+
+.razorpayButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(82, 143, 255, 0.5);
+}
+
+.razorpayButton:active {
+  transform: translateY(0);
+}
+
+.razorpayIcon {
+  background: linear-gradient(135deg, #528fff, #3f4aa6) !important;
+}
+
+.razorpayText {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
 }
 
 .buttonIcon {

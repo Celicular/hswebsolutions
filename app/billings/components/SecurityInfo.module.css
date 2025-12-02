@@ -1,0 +1,208 @@
+.section {
+  position: relative;
+  background: linear-gradient(135deg, var(--background) 0%, var(--background-darker) 100%);
+  padding: 4rem 2rem;
+  transition: background 0.3s ease;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.sectionSubtitle {
+  font-size: 1.1rem;
+  color: var(--secondary-text);
+  transition: color 0.3s ease;
+}
+
+.securityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.securityCard {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+:global(.dark-mode) .securityCard {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.securityCard:hover {
+  transform: translateY(-8px);
+  border-color: var(--link);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+:global(.dark-mode) .securityCard:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.cardIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, var(--link), var(--accent));
+  border-radius: 12px;
+  margin: 0 auto 1.5rem;
+  font-size: 2rem;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.securityCard:hover .cardIcon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.cardTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.cardDescription {
+  font-size: 1rem;
+  color: var(--secondary-text);
+  line-height: 1.8;
+  transition: color 0.3s ease;
+}
+
+.trustBox {
+  background: var(--card-bg);
+  border: 2px solid var(--link);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.15);
+  transition: all 0.3s ease;
+}
+
+:global(.dark-mode) .trustBox {
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.25);
+}
+
+.trustBox:hover {
+  box-shadow: 0 8px 24px rgba(33, 150, 243, 0.3);
+}
+
+:global(.dark-mode) .trustBox:hover {
+  box-shadow: 0 8px 24px rgba(33, 150, 243, 0.4);
+}
+
+.trustText {
+  font-size: 1.1rem;
+  color: var(--secondary-text);
+  line-height: 1.8;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .securityGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .securityCard {
+    padding: 1.5rem;
+  }
+
+  .cardIcon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.75rem;
+  }
+
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+
+  .trustBox {
+    padding: 1.5rem;
+  }
+
+  .trustText {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 2rem 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.75rem;
+  }
+
+  .sectionSubtitle {
+    font-size: 1rem;
+  }
+
+  .securityGrid {
+    gap: 1rem;
+  }
+
+  .securityCard {
+    padding: 1rem;
+  }
+
+  .cardIcon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .cardTitle {
+    font-size: 1.1rem;
+  }
+
+  .cardDescription {
+    font-size: 0.95rem;
+  }
+
+  .trustBox {
+    padding: 1rem;
+  }
+
+  .trustText {
+    font-size: 0.95rem;
+  }
+}

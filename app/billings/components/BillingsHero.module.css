@@ -1,0 +1,152 @@
+.hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, var(--background) 0%, var(--background-darker) 100%);
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+.backgroundElements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  filter: blur(50px);
+}
+
+.blob1 {
+  width: 400px;
+  height: 400px;
+  background: var(--link);
+  top: -100px;
+  right: -100px;
+  animation: float 8s ease-in-out infinite;
+}
+
+.blob2 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent);
+  bottom: -50px;
+  left: -50px;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(30px) translateX(20px);
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  transition: color 0.3s ease;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: var(--link);
+  font-weight: 600;
+  margin-bottom: 2rem;
+  transition: color 0.3s ease;
+}
+
+:global(.light-mode) .subtitle {
+  color: white;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.description p {
+  font-size: 1.1rem;
+  color: white;
+  line-height: 1.8;
+  transition: color 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 50vh;
+    padding: 4rem 1.5rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .description p {
+    font-size: 1rem;
+  }
+
+  .blob1 {
+    width: 250px;
+    height: 250px;
+  }
+
+  .blob2 {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 45vh;
+    padding: 3rem 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .description {
+    gap: 1rem;
+  }
+
+  .description p {
+    font-size: 0.95rem;
+  }
+}

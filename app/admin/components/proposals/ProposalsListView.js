@@ -14,10 +14,36 @@ export default function ProposalsListView() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortBy, setSortBy] = useState("created");
+  const [invoices, setInvoices] = useState([]);
+  const [showInvoicesModal, setShowInvoicesModal] = useState(false);
+  const [selectedProposalForInvoices, setSelectedProposalForInvoices] =
+    useState(null);
 
   useEffect(() => {
     fetchProposals();
   }, [page, searchTerm, statusFilter, sortBy]);
+
+  const fetchInvoices = async (proposalId) => {
+    try {
+      const response = await fetch(`/api/admin/invoices/${proposalId}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setInvoices(data.data || []);
+        setShowInvoicesModal(true);
+      } else {
+        alert("Failed to fetch invoices");
+      }
+    } catch (err) {
+      console.error("Error fetching invoices:", err);
+      alert("Failed to load invoices");
+    }
+  };
+
+  const handleViewInvoices = (proposal) => {
+    setSelectedProposalForInvoices(proposal);
+    fetchInvoices(proposal.proposal_id);
+  };
 
   const fetchProposals = async () => {
     setIsLoading(true);
@@ -284,6 +310,13 @@ export default function ProposalsListView() {
                       >
                         ✏️ Edit
                       </button>
+                      <button
+                        onClick={() => handleViewInvoices(proposal)}
+                        className={styles.btnAction}
+                        title="View Invoices"
+                      >
+                        📄 Invoices
+                      </button>
                       {proposal.status === "draft" && (
                         <button
                           onClick={() =>
@@ -334,6 +367,123 @@ export default function ProposalsListView() {
             </div>
           )}
         </>
+      )}
+
+      {/* Invoice Modal */}
+      {showInvoicesModal && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setShowInvoicesModal(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.modalHeader}>
+              <h2>📄 Invoice History</h2>
+              <button
+                onClick={() => setShowInvoicesModal(false)}
+                className={styles.closeModalBtn}
+              >
+                ✕
+              </button>
+            </div>
+
+            {selectedProposalForInvoices && (
+              <div className={styles.invoiceProposalInfo}>
+                <div>
+                  <strong>Proposal ID:</strong>{" "}
+                  {selectedProposalForInvoices.proposal_id}
+                </div>
+                <div>
+                  <strong>Client:</strong>{" "}
+                  {selectedProposalForInvoices.client_name}
+                </div>
+                <div>
+                  <strong>Amount:</strong> ₹
+                  {parseFloat(
+                    selectedProposalForInvoices.total_amount || 0
+                  ).toFixed(2)}
+                </div>
+              </div>
+            )}
+
+            <div className={styles.invoicesList}>
+              {invoices.length === 0 ? (
+                <div className={styles.emptyInvoices}>
+                  <p>No invoices generated yet</p>
+                </div>
+              ) : (
+                <table className={styles.invoicesTable}>
+                  <thead>
+                    <tr>
+                      <th>Invoice ID</th>
+                      <th>Type</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Generated</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {invoices.map((invoice) => (
+                      <tr key={invoice.id} className={styles.invoiceRow}>
+                        <td className={styles.invoiceId}>
+                          <code>{invoice.razorpay_invoice_id || "N/A"}</code>
+                        </td>
+                        <td className={styles.invoiceType}>
+                          {invoice.invoice_type === "milestone"
+                            ? "🎯 Milestone"
+                            : "💳 Full Payment"}
+                        </td>
+                        <td className={styles.invoiceAmount}>
+                          ₹{parseFloat(invoice.amount || 0).toFixed(2)}
+                        </td>
+                        <td className={styles.invoiceStatus}>
+                          <span
+                            className={`${styles.statusBadge} ${
+                              styles[`status${invoice.status}`]
+                            }`}
+                          >
+                            {invoice.status || "draft"}
+                          </span>
+                        </td>
+                        <td className={styles.invoiceDate}>
+                          {new Date(invoice.generated_at).toLocaleDateString(
+                            "en-IN"
+                          )}
+                        </td>
+                        <td className={styles.invoiceAction}>
+                          {invoice.short_url ? (
+                            <a
+                              href={invoice.short_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.downloadLink}
+                            >
+                              ⬇️ Download PDF
+                            </a>
+                          ) : (
+                            <span className={styles.noLink}>No URL</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+
+            <div className={styles.modalFooter}>
+              <button
+                onClick={() => setShowInvoicesModal(false)}
+                className={styles.btnPrimary}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

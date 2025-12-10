@@ -1584,18 +1584,326 @@
   color: #ffffff;
 }
 
-/* Responsive adjustments */
+/* ===== INVOICE MODAL STYLING ===== */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalContent {
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  max-width: 900px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(var(--border-color-rgb), 0.1);
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+:global(.dark-mode) .modalContent {
+  background-color: #1a1a1a;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 16px 16px 0 0;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.closeModalBtn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.closeModalBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.invoiceProposalInfo {
+  padding: 1.5rem;
+  background-color: rgba(102, 126, 234, 0.05);
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+}
+
+:global(.dark-mode) .invoiceProposalInfo {
+  background-color: rgba(102, 126, 234, 0.1);
+}
+
+.invoiceProposalInfo div {
+  font-size: 0.95rem;
+}
+
+.invoiceProposalInfo strong {
+  color: var(--primary);
+  margin-right: 0.5rem;
+}
+
+.invoicesList {
+  padding: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.emptyInvoices {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #999;
+}
+
+.emptyInvoices p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.invoicesTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.invoicesTable thead {
+  background-color: rgba(102, 126, 234, 0.08);
+  border-bottom: 2px solid var(--primary);
+}
+
+:global(.dark-mode) .invoicesTable thead {
+  background-color: rgba(102, 126, 234, 0.15);
+}
+
+.invoicesTable th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.invoiceRow {
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.2s ease;
+}
+
+.invoiceRow:hover {
+  background-color: rgba(102, 126, 234, 0.03);
+}
+
+:global(.dark-mode) .invoiceRow:hover {
+  background-color: rgba(102, 126, 234, 0.08);
+}
+
+.invoicesTable td {
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+.invoiceId {
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.invoiceId code {
+  background-color: rgba(102, 126, 234, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.invoiceType {
+  font-weight: 600;
+}
+
+.invoiceAmount {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.invoiceStatus {
+  display: flex;
+}
+
+.statusBadge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.statusdraft {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+:global(.dark-mode) .statusdraft {
+  background-color: rgba(100, 100, 100, 0.3);
+  color: #bbb;
+}
+
+.statusissued {
+  background-color: #fef3cd;
+  color: #856404;
+}
+
+:global(.dark-mode) .statusissued {
+  background-color: rgba(200, 100, 0, 0.2);
+  color: #ffb84d;
+}
+
+.statuspaid {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+:global(.dark-mode) .statuspaid {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #66bb6a;
+}
+
+.invoiceDate {
+  color: #666;
+}
+
+:global(.dark-mode) .invoiceDate {
+  color: #aaa;
+}
+
+.invoiceAction {
+  text-align: center;
+}
+
+.downloadLink {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.downloadLink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.noLink {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.modalFooter {
+  padding: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modalFooter .btnPrimary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modalFooter .btnPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.3);
+}
+
 @media (max-width: 768px) {
-  .formCardSection {
-    padding: 1.5rem;
+  .modalContent {
+    width: 95%;
+    max-height: 85vh;
   }
 
-  .sectionHeader h3 {
-    font-size: 1.2rem;
+  .invoiceProposalInfo {
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
-  .stepContainer {
-    gap: 1.5rem;
-    padding: 1rem 0;
+  .invoicesTable {
+    font-size: 0.9rem;
+  }
+
+  .invoicesTable th,
+  .invoicesTable td {
+    padding: 0.75rem;
+  }
+
+  .modalHeader h2 {
+    font-size: 1.3rem;
   }
 }

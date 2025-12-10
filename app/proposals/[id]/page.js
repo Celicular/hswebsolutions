@@ -16,6 +16,8 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
   const [error, setError] = useState("");
   const [activeTab, setActiveTab] = useState("details");
   const [paymentProcessing, setPaymentProcessing] = useState(false);
+  const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+  const [currentInvoice, setCurrentInvoice] = useState(null);
 
   useEffect(() => {
     if (params.id) {
@@ -63,9 +65,62 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
     };
   }, []);
 
+  const handleGenerateInvoice = async (invoiceType, milestoneId = null) => {
+    try {
+      setPaymentProcessing(true);
+      const response = await fetch("/api/invoices/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          proposalId: proposal.proposal_id,
+          invoiceType: invoiceType,
+          milestoneId: milestoneId,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to generate invoice");
+      }
+
+      // Show custom invoice modal
+      setCurrentInvoice(data.invoice);
+      setShowInvoiceModal(true);
+    } catch (err) {
+      console.error("Invoice generation error:", err);
+      alert("Failed to generate invoice: " + err.message);
+    } finally {
+      setPaymentProcessing(false);
+    }
+  };
+
+  const downloadInvoicePDF = async () => {
+    if (!currentInvoice) return;
+
+    try {
+      // Dynamically import html2pdf
+      const html2pdf = (await import("html2pdf.js")).default;
+
+      const element = document.getElementById("invoice-content");
+      const opt = {
+        margin: 10,
+        filename: `Invoice-${currentInvoice.id}.pdf`,
+        image: { type: "png", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
+      };
+
+      html2pdf().set(opt).from(element).save();
+    } catch (err) {
+      console.error("PDF download error:", err);
+      alert("Failed to download PDF");
+    }
+  };
+
   const handleRazorpayPayment = async (amount, milestoneId = null) => {
     // Prevent payment if already fully paid
-    if (proposal.total_amount <= totalPaid && !milestoneId) {
+    if (proposal.total_amount <= paidMilestonesTotalAmount && !milestoneId) {
       alert("This proposal is already fully paid");
       return;
     }
@@ -223,8 +278,17 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
     return p.status === "completed" ? sum + parseFloat(p.amount || 0) : sum;
   }, 0);
 
+  // Calculate amounts based on milestone payment status
+  const paidMilestonesTotalAmount = milestones.reduce((sum, m) => {
+    return m.isPaid ? sum + parseFloat(m.amount || 0) : sum;
+  }, 0);
+
+  const dueMilestonesTotalAmount = milestones.reduce((sum, m) => {
+    return !m.isPaid ? sum + parseFloat(m.amount || 0) : sum;
+  }, 0);
+
   const paymentPercentage = Math.round(
-    (totalPaid / proposal.total_amount) * 100
+    (paidMilestonesTotalAmount / proposal.total_amount) * 100
   );
 
   return (
@@ -247,8 +311,9 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
           </div>
           <div className={styles.statusIndicator}>
             <span className={styles.statusIcon}>✓</span>
-            {proposal.payment_status?.toUpperCase().replace("_", " ") ||
-              "PENDING"}
+            {proposal.payment_status
+              ? proposal.payment_status.toUpperCase().replace("_", " ")
+              : "PENDING"}
           </div>
         </div>
 
@@ -371,10 +436,18 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
                     fontSize: "0.85rem",
                     color: "var(--secondary-text)",
                     marginTop: "0.5rem",
+                    display: "flex",
+                    justifyContent: "space-between",
                   }}
                 >
-                  Paid: {formatCurrency(totalPaid)} /{" "}
-                  {formatCurrency(proposal.total_amount)}
+                  <span>
+                    ✓ Paid:{" "}
+                    <strong>{formatCurrency(paidMilestonesTotalAmount)}</strong>
+                  </span>
+                  <span>
+                    ⏳ Due:{" "}
+                    <strong>{formatCurrency(dueMilestonesTotalAmount)}</strong>
+                  </span>
                 </p>
               </div>
 
@@ -487,25 +560,32 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
               <div className={styles.paymentStatusItem}>
                 <span className={styles.statusLabel}>Overall Status</span>
                 <span className={styles.statusAmount}>
-                  {proposal.payment_status?.toUpperCase().replace("_", " ")}
+                  {proposal.payment_status
+                    ? proposal.payment_status.toUpperCase().replace("_", " ")
+                    : "PENDING"}
                 </span>
               </div>
               <div className={styles.paymentStatusItem}>
-                <span className={styles.statusLabel}>Total Paid</span>
+                <span className={styles.statusLabel}>Amount Paid</span>
                 <span className={styles.statusAmount}>
-                  {formatCurrency(totalPaid)} /{" "}
+                  {formatCurrency(paidMilestonesTotalAmount)}
+                </span>
+              </div>
+              <div className={styles.paymentStatusItem}>
+                <span className={styles.statusLabel}>Amount Due</span>
+                <span className={styles.statusAmount}>
+                  {formatCurrency(dueMilestonesTotalAmount)}
+                </span>
+              </div>
+              <div className={styles.paymentStatusItem}>
+                <span className={styles.statusLabel}>Total Project Value</span>
+                <span className={styles.statusAmount}>
                   {formatCurrency(proposal.total_amount)}
-                </span>
-              </div>
-              <div className={styles.paymentStatusItem}>
-                <span className={styles.statusLabel}>Remaining</span>
-                <span className={styles.statusAmount}>
-                  {formatCurrency(proposal.total_amount - totalPaid)}
                 </span>
               </div>
             </div>
 
-            {proposal.total_amount > totalPaid && (
+            {dueMilestonesTotalAmount > 0 && (
               <div className={styles.paymentMethods}>
                 <div className={styles.paymentMethod}>
                   <div className={styles.paymentMethodIcon}>💳</div>
@@ -526,16 +606,14 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
 
             <button
               className={styles.payButton}
-              disabled={proposal.total_amount <= totalPaid || paymentProcessing}
-              onClick={() =>
-                handleRazorpayPayment(proposal.total_amount - totalPaid)
-              }
+              disabled={dueMilestonesTotalAmount <= 0 || paymentProcessing}
+              onClick={() => handleRazorpayPayment(dueMilestonesTotalAmount)}
             >
               {paymentProcessing
                 ? "Processing..."
-                : proposal.total_amount <= totalPaid
+                : dueMilestonesTotalAmount <= 0
                 ? "✓ Fully Paid"
-                : `Pay ₹${(proposal.total_amount - totalPaid).toFixed(0)}`}
+                : `Pay ₹${Math.round(dueMilestonesTotalAmount)}`}
             </button>
 
             <div className={styles.infoSection} style={{ marginTop: "2rem" }}>
@@ -639,7 +717,7 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
               </div>
             )}
             {(!proposal.payments || proposal.payments.length === 0) &&
-              totalPaid === 0 && (
+              paidMilestonesTotalAmount === 0 && (
                 <div
                   className={styles.infoSection}
                   style={{
@@ -651,6 +729,63 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
                   <p>No payments recorded yet</p>
                 </div>
               )}
+
+            {/* Invoice Generation Section */}
+            {paidMilestonesTotalAmount > 0 && (
+              <div className={styles.invoiceSection}>
+                <h3>📄 Generate Invoices</h3>
+                <div className={styles.invoiceButtonsContainer}>
+                  {/* Show milestone invoices for all paid milestones */}
+                  {milestones
+                    .filter((m) => m.isPaid)
+                    .map((milestone, idx) => (
+                      <button
+                        key={idx}
+                        className={styles.invoiceButton}
+                        onClick={() =>
+                          handleGenerateInvoice("milestone", milestone.id)
+                        }
+                        disabled={paymentProcessing}
+                      >
+                        {paymentProcessing ? (
+                          "Generating..."
+                        ) : (
+                          <>
+                            📥 Invoice -{" "}
+                            {milestone.title ||
+                              milestone.name ||
+                              `Milestone ${idx + 1}`}
+                          </>
+                        )}
+                      </button>
+                    ))}
+
+                  {/* Full Payment Invoice - only if all milestones are paid */}
+                  {paidMilestonesTotalAmount === proposal.total_amount && (
+                    <button
+                      className={styles.invoiceButton}
+                      onClick={() => handleGenerateInvoice("full")}
+                      disabled={paymentProcessing}
+                      style={{ marginTop: "0.5rem" }}
+                    >
+                      {paymentProcessing
+                        ? "Generating..."
+                        : "📥 Full Project Invoice"}
+                    </button>
+                  )}
+                </div>
+                <p
+                  style={{
+                    fontSize: "0.9rem",
+                    marginTop: "1rem",
+                    opacity: 0.9,
+                  }}
+                >
+                  💡 Click any button above to generate and download invoice
+                  PDFs
+                </p>
+              </div>
+            )}
           </div>
         )}
 
@@ -705,6 +840,583 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
           </div>
         </div>
       </main>
+
+      {/* Invoice Modal */}
+      {showInvoiceModal && currentInvoice && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setShowInvoiceModal(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: "900px", maxHeight: "90vh", overflow: "auto" }}
+          >
+            <div className={styles.modalHeader}>
+              <h2>📄 Invoice</h2>
+              <button
+                onClick={() => setShowInvoiceModal(false)}
+                className={styles.closeModalBtn}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div
+              id="invoice-content"
+              style={{
+                padding: "2rem",
+                backgroundColor: "#ffffff",
+                color: "#000000",
+              }}
+            >
+              {!currentInvoice ? (
+                <div
+                  style={{
+                    textAlign: "center",
+                    padding: "2rem",
+                    color: "#999",
+                  }}
+                >
+                  Loading invoice...
+                </div>
+              ) : (
+                <>
+                  {/* Logo and Company Header */}
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      marginBottom: "2rem",
+                      paddingBottom: "1rem",
+                      borderBottom: "2px solid #ddd",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "1rem",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "2rem",
+                          fontWeight: "700",
+                          color: "#667eea",
+                          backgroundColor: "#f0f0f0",
+                          padding: "0.75rem 1rem",
+                          borderRadius: "8px",
+                        }}
+                      >
+                        HS
+                      </div>
+                      <div>
+                        <div
+                          style={{
+                            fontSize: "1.5rem",
+                            fontWeight: "700",
+                            color: "#000000",
+                            marginBottom: "0.25rem",
+                          }}
+                        >
+                          HS Web Solutions
+                        </div>
+                        <p
+                          style={{
+                            margin: "0",
+                            fontSize: "0.85rem",
+                            color: "#333333",
+                          }}
+                        >
+                          Professional Web Solutions
+                        </p>
+                      </div>
+                    </div>
+                    <div style={{ textAlign: "right" }}>
+                      <h1
+                        style={{
+                          margin: "0 0 0.5rem 0",
+                          color: "#000000",
+                          fontSize: "2rem",
+                          fontWeight: "700",
+                        }}
+                      >
+                        INVOICE
+                      </h1>
+                    </div>
+                  </div>
+
+                  {/* Invoice Details */}
+                  <div
+                    style={{
+                      marginBottom: "2rem",
+                      padding: "1rem",
+                      backgroundColor: "#f9f9f9",
+                      borderRadius: "8px",
+                      border: "1px solid #ddd",
+                    }}
+                  >
+                    <p
+                      style={{
+                        margin: "0.25rem 0",
+                        fontSize: "0.9rem",
+                        color: "#000000",
+                      }}
+                    >
+                      Invoice ID: <strong>{currentInvoice?.id || "N/A"}</strong>
+                    </p>
+                    <p
+                      style={{
+                        margin: "0.25rem 0",
+                        fontSize: "0.9rem",
+                        color: "#000000",
+                      }}
+                    >
+                      Proposal ID:{" "}
+                      <strong>
+                        {currentInvoice?.proposal?.proposal_id || "N/A"}
+                      </strong>
+                    </p>
+                    <p
+                      style={{
+                        margin: "0.25rem 0",
+                        fontSize: "0.9rem",
+                        color: "#000000",
+                      }}
+                    >
+                      Generated: <strong>{formatDate(new Date())}</strong>
+                    </p>
+                    <p
+                      style={{
+                        margin: "0.25rem 0",
+                        fontSize: "0.9rem",
+                        color: "#000000",
+                      }}
+                    >
+                      Type:{" "}
+                      <strong>
+                        {currentInvoice?.invoiceType === "milestone"
+                          ? "Milestone Invoice"
+                          : "Full Project Invoice"}
+                      </strong>
+                    </p>
+                  </div>
+
+                  {/* Bill To & From */}
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr",
+                      gap: "2rem",
+                      marginBottom: "2rem",
+                    }}
+                  >
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: "0.85rem",
+                          fontWeight: "700",
+                          marginBottom: "0.75rem",
+                          textTransform: "uppercase",
+                          color: "#000000",
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        Bill To
+                      </h3>
+                      <p
+                        style={{
+                          margin: "0.25rem 0",
+                          fontSize: "1rem",
+                          color: "#000000",
+                          fontWeight: "600",
+                        }}
+                      >
+                        {currentInvoice.proposal.client_name}
+                      </p>
+                      <p
+                        style={{
+                          margin: "0.25rem 0",
+                          fontSize: "0.9rem",
+                          color: "#333333",
+                        }}
+                      >
+                        {currentInvoice.proposal.client_email}
+                      </p>
+                      {currentInvoice.proposal.company_name && (
+                        <p
+                          style={{
+                            margin: "0.25rem 0",
+                            fontSize: "0.9rem",
+                            color: "#333333",
+                          }}
+                        >
+                          {currentInvoice.proposal.company_name}
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <h3
+                        style={{
+                          fontSize: "0.85rem",
+                          fontWeight: "700",
+                          marginBottom: "0.75rem",
+                          textTransform: "uppercase",
+                          color: "#000000",
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        Invoice Details
+                      </h3>
+                      <p
+                        style={{
+                          margin: "0.25rem 0",
+                          fontSize: "0.9rem",
+                          color: "#333333",
+                        }}
+                      >
+                        Proposal ID:{" "}
+                        <strong style={{ color: "#000000" }}>
+                          {currentInvoice.proposal.proposal_id}
+                        </strong>
+                      </p>
+                      <p style={{ margin: "0.25rem 0", fontSize: "0.9rem" }}>
+                        Invoice Type:{" "}
+                        <strong>
+                          {currentInvoice.invoiceType === "milestone"
+                            ? "Milestone"
+                            : "Full Project"}
+                        </strong>
+                      </p>
+                      {currentInvoice.payment?.razorpay_payment_id && (
+                        <p style={{ margin: "0.25rem 0", fontSize: "0.9rem" }}>
+                          Payment ID:{" "}
+                          <strong>
+                            {currentInvoice.payment.razorpay_payment_id}
+                          </strong>
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Milestones Table */}
+                  <div style={{ marginBottom: "2rem" }}>
+                    <h3
+                      style={{
+                        fontSize: "0.85rem",
+                        fontWeight: "700",
+                        marginBottom: "1rem",
+                        textTransform: "uppercase",
+                        color: "#000000",
+                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      Project Milestones
+                    </h3>
+                    <table
+                      style={{ width: "100%", borderCollapse: "collapse" }}
+                    >
+                      <thead>
+                        <tr
+                          style={{
+                            backgroundColor: "#f5f5f5",
+                            borderBottom: "2px solid #ddd",
+                          }}
+                        >
+                          <th
+                            style={{
+                              padding: "0.75rem",
+                              textAlign: "left",
+                              fontWeight: "700",
+                              color: "#000000",
+                            }}
+                          >
+                            Description
+                          </th>
+                          <th
+                            style={{
+                              padding: "0.75rem",
+                              textAlign: "right",
+                              fontWeight: "700",
+                              color: "#000000",
+                            }}
+                          >
+                            Amount
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {currentInvoice.milestones &&
+                          currentInvoice.milestones.map((milestone, idx) => (
+                            <tr
+                              key={idx}
+                              style={{ borderBottom: "1px solid #eee" }}
+                            >
+                              <td style={{ padding: "0.75rem" }}>
+                                <div
+                                  style={{
+                                    fontWeight: "600",
+                                    color: "#000000",
+                                  }}
+                                >
+                                  {milestone.title ||
+                                    milestone.name ||
+                                    `Milestone ${idx + 1}`}
+                                </div>
+                                {milestone.description && (
+                                  <div
+                                    style={{
+                                      fontSize: "0.85rem",
+                                      color: "#333333",
+                                      marginTop: "0.25rem",
+                                    }}
+                                  >
+                                    {milestone.description}
+                                  </div>
+                                )}
+                              </td>
+                              <td
+                                style={{
+                                  padding: "0.75rem",
+                                  textAlign: "right",
+                                  fontWeight: "600",
+                                  color: "#000000",
+                                }}
+                              >
+                                {formatCurrency(milestone.amount)}
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Financial Summary */}
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "1fr 1fr 1fr",
+                      gap: "1rem",
+                      marginBottom: "2rem",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: "1rem",
+                        backgroundColor: "#e3f2fd",
+                        borderRadius: "8px",
+                        border: "1px solid #bbdefb",
+                      }}
+                    >
+                      <p
+                        style={{
+                          margin: "0",
+                          fontSize: "0.85rem",
+                          color: "#000000",
+                          textTransform: "uppercase",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Amount Paid
+                      </p>
+                      <p
+                        style={{
+                          margin: "0.5rem 0 0 0",
+                          fontSize: "1.25rem",
+                          fontWeight: "700",
+                          color: "#1976d2",
+                        }}
+                      >
+                        {formatCurrency(currentInvoice.financial.amount_paid)}
+                      </p>
+                    </div>
+
+                    <div
+                      style={{
+                        padding: "1rem",
+                        backgroundColor: "#fff3e0",
+                        borderRadius: "8px",
+                        border: "1px solid #ffe0b2",
+                      }}
+                    >
+                      <p
+                        style={{
+                          margin: "0",
+                          fontSize: "0.85rem",
+                          color: "#000000",
+                          textTransform: "uppercase",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Amount Due
+                      </p>
+                      <p
+                        style={{
+                          margin: "0.5rem 0 0 0",
+                          fontSize: "1.25rem",
+                          fontWeight: "700",
+                          color: "#f57c00",
+                        }}
+                      >
+                        {formatCurrency(currentInvoice.financial.amount_due)}
+                      </p>
+                    </div>
+
+                    <div
+                      style={{
+                        padding: "1rem",
+                        backgroundColor: "#f3e5f5",
+                        borderRadius: "8px",
+                        border: "1px solid #e1bee7",
+                      }}
+                    >
+                      <p
+                        style={{
+                          margin: "0",
+                          fontSize: "0.85rem",
+                          color: "#000000",
+                          textTransform: "uppercase",
+                          fontWeight: "600",
+                        }}
+                      >
+                        Total Value
+                      </p>
+                      <p
+                        style={{
+                          margin: "0.5rem 0 0 0",
+                          fontSize: "1.25rem",
+                          fontWeight: "700",
+                          color: "#7b1fa2",
+                        }}
+                      >
+                        {formatCurrency(currentInvoice.financial.total_amount)}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Payment Status */}
+                  {currentInvoice.payment && (
+                    <div
+                      style={{
+                        marginBottom: "2rem",
+                        padding: "1rem",
+                        backgroundColor: "#f0f0f0",
+                        borderRadius: "8px",
+                        border: "1px solid #ddd",
+                      }}
+                    >
+                      <h3
+                        style={{
+                          margin: "0 0 0.5rem 0",
+                          fontSize: "0.9rem",
+                          fontWeight: "700",
+                          color: "#000000",
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Payment Status
+                      </h3>
+                      <p
+                        style={{
+                          margin: "0.25rem 0",
+                          fontSize: "0.9rem",
+                          color: "#000000",
+                        }}
+                      >
+                        Status:{" "}
+                        <strong>
+                          {currentInvoice.payment?.status?.toUpperCase() ||
+                            "COMPLETED"}
+                        </strong>
+                      </p>
+                      <p
+                        style={{
+                          margin: "0.25rem 0",
+                          fontSize: "0.9rem",
+                          color: "#000000",
+                        }}
+                      >
+                        Payment Method:{" "}
+                        <strong>
+                          {currentInvoice.payment?.payment_method || "Online"}
+                        </strong>
+                      </p>
+                      <p
+                        style={{
+                          margin: "0.25rem 0",
+                          fontSize: "0.9rem",
+                          color: "#000000",
+                        }}
+                      >
+                        Payment Date:{" "}
+                        <strong>
+                          {formatDate(currentInvoice.payment?.payment_date)}
+                        </strong>
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Footer */}
+                  <div
+                    style={{
+                      marginTop: "3rem",
+                      paddingTop: "1rem",
+                      borderTop: "1px solid #ddd",
+                      textAlign: "center",
+                      color: "#000000",
+                      fontSize: "0.85rem",
+                    }}
+                  >
+                    <p style={{ margin: "0.5rem 0", color: "#000000", fontWeight: "500" }}>
+                      Thank you for your business!
+                    </p>
+                    <p style={{ margin: "0.5rem 0", color: "#333333" }}>
+                      For any questions, contact us at contact@hswebsolutions.com
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className={styles.modalFooter}>
+              <button
+                onClick={downloadInvoicePDF}
+                style={{
+                  padding: "0.75rem 1.5rem",
+                  backgroundColor: "#667eea",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontWeight: "600",
+                  marginRight: "1rem",
+                }}
+              >
+                📥 Download as PDF
+              </button>
+              <button
+                onClick={() => setShowInvoiceModal(false)}
+                style={{
+                  padding: "0.75rem 1.5rem",
+                  backgroundColor: "#f0f0f0",
+                  color: "#333",
+                  border: "none",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  fontWeight: "600",
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );

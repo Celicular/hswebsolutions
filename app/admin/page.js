@@ -1,18 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./admin.module.css";
 import CreateProposalForm from "./components/proposals/CreateProposalForm";
 import ProposalsListView from "./components/proposals/ProposalsListView";
 import QueryRunner from "./components/QueryRunner";
+import { useInitialTab } from "./components/AdminTabs";
 
-export default function AdminDashboard() {
+function AdminDashboardContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState(
-    searchParams.get("tab") || "users"
-  );
+  const initialTab = useInitialTab();
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -993,5 +992,13 @@ export default function AdminDashboard() {
       {/* Query Runner Tab */}
       {activeTab === "query-runner" && <QueryRunner />}
     </div>
+  );
+}
+
+export default function AdminDashboard() {
+  return (
+    <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Loading dashboard...</div>}>
+      <AdminDashboardContent />
+    </Suspense>
   );
 }

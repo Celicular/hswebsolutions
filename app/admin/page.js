@@ -997,7 +997,13 @@ function AdminDashboardContent() {
 
 export default function AdminDashboard() {
   return (
-    <Suspense fallback={<div style={{ padding: "2rem", textAlign: "center" }}>Loading dashboard...</div>}>
+    <Suspense
+      fallback={
+        <div style={{ padding: "2rem", textAlign: "center" }}>
+          Loading dashboard...
+        </div>
+      }
+    >
       <AdminDashboardContent />
     </Suspense>
   );

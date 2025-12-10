@@ -6,4 +6,3 @@ export function useInitialTab() {
   const searchParams = useSearchParams();
   return searchParams.get("tab") || "users";
 }
-

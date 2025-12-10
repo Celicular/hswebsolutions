@@ -1371,11 +1371,18 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
                       fontSize: "0.85rem",
                     }}
                   >
-                    <p style={{ margin: "0.5rem 0", color: "#000000", fontWeight: "500" }}>
+                    <p
+                      style={{
+                        margin: "0.5rem 0",
+                        color: "#000000",
+                        fontWeight: "500",
+                      }}
+                    >
                       Thank you for your business!
                     </p>
                     <p style={{ margin: "0.5rem 0", color: "#333333" }}>
-                      For any questions, contact us at contact@hswebsolutions.com
+                      For any questions, contact us at
+                      contact@hswebsolutions.com
                     </p>
                   </div>
                 </>

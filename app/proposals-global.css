@@ -13,8 +13,7 @@
   --border-color-rgb: 0, 0, 0;
 }
 
-.dark-mode,
-:global(.dark-mode) {
+.dark-mode {
   --primary: #4caf50;
   --accent: #ff8c00;
   --card-bg: #1a2847;

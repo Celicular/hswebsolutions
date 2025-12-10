@@ -6,6 +6,9 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable Turbopack (default in Next.js 16)
+  turbopack: {},
+
   // Enable production source maps (helps with error tracking)
   productionBrowserSourceMaps: true,
 

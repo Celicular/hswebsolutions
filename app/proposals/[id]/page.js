@@ -216,13 +216,13 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
   const milestones = Array.isArray(proposal.milestones)
     ? proposal.milestones
     : [];
-  
+
   // Calculate total paid from actual payment records in database
   const payments = Array.isArray(proposal.payments) ? proposal.payments : [];
   const totalPaid = payments.reduce((sum, p) => {
     return p.status === "completed" ? sum + parseFloat(p.amount || 0) : sum;
   }, 0);
-  
+
   const paymentPercentage = Math.round(
     (totalPaid / proposal.total_amount) * 100
   );
@@ -534,8 +534,8 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
               {paymentProcessing
                 ? "Processing..."
                 : proposal.total_amount <= totalPaid
-                  ? "✓ Fully Paid"
-                  : `Pay ₹${(proposal.total_amount - totalPaid).toFixed(0)}`}
+                ? "✓ Fully Paid"
+                : `Pay ₹${(proposal.total_amount - totalPaid).toFixed(0)}`}
             </button>
 
             <div className={styles.infoSection} style={{ marginTop: "2rem" }}>
@@ -580,12 +580,19 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
                           <button
                             className={styles.milestoneStatus}
                             style={{
-                              cursor: paymentProcessing || milestone.isPaid ? "not-allowed" : "pointer",
+                              cursor:
+                                paymentProcessing || milestone.isPaid
+                                  ? "not-allowed"
+                                  : "pointer",
                               padding: "0.5rem 1rem",
-                              opacity: paymentProcessing || milestone.isPaid ? 0.6 : 1,
+                              opacity:
+                                paymentProcessing || milestone.isPaid ? 0.6 : 1,
                             }}
                             onClick={() =>
-                              handleRazorpayPayment(milestone.amount, milestone.id)
+                              handleRazorpayPayment(
+                                milestone.amount,
+                                milestone.id
+                              )
                             }
                             disabled={paymentProcessing || milestone.isPaid}
                           >
@@ -631,11 +638,19 @@ export default function ProposalViewerPage({ params: paramsPromise }) {
                 </div>
               </div>
             )}
-            {(!proposal.payments || proposal.payments.length === 0) && totalPaid === 0 && (
-              <div className={styles.infoSection} style={{ marginTop: "2rem", textAlign: "center", color: "var(--secondary-text)" }}>
-                <p>No payments recorded yet</p>
-              </div>
-            )}
+            {(!proposal.payments || proposal.payments.length === 0) &&
+              totalPaid === 0 && (
+                <div
+                  className={styles.infoSection}
+                  style={{
+                    marginTop: "2rem",
+                    textAlign: "center",
+                    color: "var(--secondary-text)",
+                  }}
+                >
+                  <p>No payments recorded yet</p>
+                </div>
+              )}
           </div>
         )}
 

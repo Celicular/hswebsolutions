@@ -77,7 +77,8 @@ export async function PATCH(request, { params }) {
 
     // Update proposal
     await executeQuery({
-      query: "UPDATE proposals SET status = ?, updated_at = NOW() WHERE proposal_id = ?",
+      query:
+        "UPDATE proposals SET status = ?, updated_at = NOW() WHERE proposal_id = ?",
       values: [status, id],
     });
 

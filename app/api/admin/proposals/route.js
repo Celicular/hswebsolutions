@@ -4,9 +4,7 @@ import {
   generateProposalId,
   logProposalAction,
 } from "../../../lib/proposal-utils-server";
-import {
-  validateProposalData,
-} from "../../../lib/proposal-utils";
+import { validateProposalData } from "../../../lib/proposal-utils";
 
 // GET all proposals
 export async function GET(request) {

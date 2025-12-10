@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import { executeQuery } from "./db";
 import { logProposalAction as logAction } from "./proposal-utils";
@@ -27,7 +27,7 @@ export async function generateProposalId() {
  */
 export async function logProposalAction(proposalId, action, userId) {
   try {
-    const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const timestamp = new Date().toISOString().slice(0, 19).replace("T", " ");
     await executeQuery({
       query: `
         INSERT INTO proposal_audit_log (proposal_id, action, user_id, timestamp)

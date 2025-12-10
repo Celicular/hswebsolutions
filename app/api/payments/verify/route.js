@@ -19,10 +19,7 @@ export async function POST(request) {
     // Validate amount is positive number
     const parsedAmount = parseFloat(amount);
     if (isNaN(parsedAmount) || parsedAmount <= 0) {
-      return NextResponse.json(
-        { error: "Invalid amount" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Invalid amount" }, { status: 400 });
     }
 
     // Verify payment signature
@@ -54,7 +51,7 @@ export async function POST(request) {
     }
 
     const proposal = proposals[0];
-    
+
     // Parse milestones if needed
     let milestones = proposal.milestones;
     if (typeof milestones === "string") {

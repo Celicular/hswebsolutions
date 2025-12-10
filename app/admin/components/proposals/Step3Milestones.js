@@ -49,9 +49,12 @@ export default function Step3Milestones({
     ];
 
     // Calculate total project cost from all milestones
-    const totalAmount = updatedMilestones.reduce((sum, m) => sum + (m.amount || 0), 0);
+    const totalAmount = updatedMilestones.reduce(
+      (sum, m) => sum + (m.amount || 0),
+      0
+    );
 
-    updateFields({ 
+    updateFields({
       milestones: updatedMilestones,
       totalProjectCost: totalAmount.toString(),
     });
@@ -68,11 +71,11 @@ export default function Step3Milestones({
 
   const handleRemoveMilestone = (id) => {
     const updated = milestones.filter((m) => m.id !== id);
-    
+
     // Recalculate total project cost
     const totalAmount = updated.reduce((sum, m) => sum + (m.amount || 0), 0);
-    
-    updateFields({ 
+
+    updateFields({
       milestones: updated,
       totalProjectCost: totalAmount > 0 ? totalAmount.toString() : "",
     });

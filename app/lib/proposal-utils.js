@@ -82,7 +82,11 @@ export function validateProposalData(data) {
   // Payment
   if (!data.payment_policies?.trim())
     errors.payment_policies = "Payment policies are required";
-  if (!data.payment_methods || !Array.isArray(data.payment_methods) || data.payment_methods.length === 0)
+  if (
+    !data.payment_methods ||
+    !Array.isArray(data.payment_methods) ||
+    data.payment_methods.length === 0
+  )
     errors.payment_methods = "At least one payment method is required";
   if (!data.total_amount || data.total_amount <= 0)
     errors.total_amount = "Valid amount is required";

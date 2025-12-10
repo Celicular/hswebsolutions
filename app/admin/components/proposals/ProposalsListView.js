@@ -275,7 +275,9 @@ export default function ProposalsListView() {
                       </button>
                       <button
                         onClick={() =>
-                          router.push(`/admin/proposals/${proposal.proposal_id}/edit`)
+                          router.push(
+                            `/admin/proposals/${proposal.proposal_id}/edit`
+                          )
                         }
                         className={styles.btnAction}
                         title="Edit Proposal"
@@ -284,7 +286,9 @@ export default function ProposalsListView() {
                       </button>
                       {proposal.status === "draft" && (
                         <button
-                          onClick={() => handleSendProposal(proposal.proposal_id)}
+                          onClick={() =>
+                            handleSendProposal(proposal.proposal_id)
+                          }
                           className={`${styles.btnAction} ${styles.btnSend}`}
                           title="Send to Client"
                         >

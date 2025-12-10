@@ -23,10 +23,18 @@
   transition: color 0.3s ease;
 }
 
+:global(.dark-mode) .sectionTitle {
+  color: #ffffff;
+}
+
 .sectionSubtitle {
   font-size: 1.1rem;
   color: var(--secondary-text);
   transition: color 0.3s ease;
+}
+
+:global(.dark-mode) .sectionSubtitle {
+  color: #bbbbbb;
 }
 
 .methodsGrid {
@@ -47,6 +55,8 @@
 }
 
 :global(.dark-mode) .methodCard {
+  background: #1a2847;
+  border-color: #333333;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 

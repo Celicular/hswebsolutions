@@ -1,0 +1,28 @@
+/* Global CSS Variables for Proposals Module */
+
+:root {
+  --primary: #4caf50;
+  --accent: #ff8c00;
+  --card-bg: #ffffff;
+  --foreground: #333333;
+  --secondary-text: #666666;
+  --border: #e5e5e5;
+  --input-bg: #f9f9f9;
+  --error: #f44336;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --border-color-rgb: 0, 0, 0;
+}
+
+.dark-mode,
+:global(.dark-mode) {
+  --primary: #4caf50;
+  --accent: #ff8c00;
+  --card-bg: #1a2847;
+  --foreground: #ffffff;
+  --secondary-text: #9ca3af;
+  --border: #475569;
+  --input-bg: #0f172a;
+  --error: #ef4444;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --border-color-rgb: 255, 255, 255;
+}

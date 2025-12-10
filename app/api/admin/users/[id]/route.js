@@ -2,9 +2,9 @@ import { executeQuery } from '../../../db';
 import { NextResponse } from 'next/server';
 
 // PUT /api/admin/users/[id] - Update a user
-export async function PUT(request, { params }) {
+export async function PUT(request, { params: paramsPromise }) {
   try {
-    const { id } = params;
+    const { id } = await paramsPromise;
     const { userid, password } = await request.json();
     
     // Input validation
@@ -71,9 +71,9 @@ export async function PUT(request, { params }) {
 }
 
 // DELETE /api/admin/users/[id] - Delete a user
-export async function DELETE(request, { params }) {
+export async function DELETE(request, { params: paramsPromise }) {
   try {
-    const { id } = params;
+    const { id } = await paramsPromise;
     
     // Check if user exists
     const users = await executeQuery({

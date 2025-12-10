@@ -1,0 +1,740 @@
+/* Proposal Viewer Page Styling */
+/* Client-facing proposal display with payment interface */
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+  padding-top: 5rem;
+  background-color: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+:global(.dark-mode) .container {
+  background-color: var(--background);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--border);
+  gap: 1rem;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.backButton:hover {
+  background-color: rgba(76, 175, 80, 0.1);
+  transform: translateX(-2px);
+}
+
+.headerTitle {
+  flex: 1;
+  margin: 0;
+}
+
+.proposalTitle {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.proposalSubtitle {
+  font-size: 0.95rem;
+  color: var(--secondary-text);
+  margin-top: 0.3rem;
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(135deg, var(--primary), rgba(76, 175, 80, 0.7));
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.statusIcon {
+  font-size: 1.2rem;
+}
+
+/* ===== TABS ===== */
+.tabsContainer {
+  margin-bottom: 2.5rem;
+}
+
+.tabsList {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--border);
+  overflow-x: auto;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.tab {
+  padding: 1rem 1.5rem;
+  background: none;
+  border: none;
+  color: var(--secondary-text);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.tab:hover {
+  color: var(--foreground);
+}
+
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.tabContent {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== DETAILS TAB ===== */
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.infoSection {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 1.8rem;
+  box-shadow: 0 4px 12px var(--shadow);
+  border: 1px solid rgba(var(--border-color-rgb), 0.1);
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.sectionTitle::before {
+  content: "";
+  width: 4px;
+  height: 1.1rem;
+  background: linear-gradient(180deg, var(--primary), var(--accent));
+  border-radius: 2px;
+}
+
+.infoItem {
+  margin-bottom: 1.2rem;
+}
+
+.infoItem:last-child {
+  margin-bottom: 0;
+}
+
+.infoLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+
+.infoValue {
+  font-size: 1rem;
+  color: var(--foreground);
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.infoLink {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.infoLink:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+/* ===== PAYMENT BREAKDOWN ===== */
+.paymentBreakdown {
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 0.05),
+    rgba(255, 140, 0, 0.03)
+  );
+  border-radius: 10px;
+  padding: 2rem;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  margin-top: 2rem;
+}
+
+:global(.dark-mode) .paymentBreakdown {
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 0.08),
+    rgba(255, 140, 0, 0.05)
+  );
+}
+
+.totalAmount {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid rgba(76, 175, 80, 0.2);
+}
+
+.amountLabel {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.amountValue {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.paymentProgress {
+  margin-bottom: 2rem;
+}
+
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.milestonesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.milestoneCard {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.milestoneCard:hover {
+  box-shadow: 0 2px 8px var(--shadow);
+  border-color: var(--primary);
+}
+
+.milestoneCardPaid {
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 0.08),
+    rgba(76, 175, 80, 0.02)
+  );
+  border-color: rgba(76, 175, 80, 0.3);
+}
+
+.milestoneHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.milestoneName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.milestoneAmount {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.milestoneStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  background-color: rgba(76, 175, 80, 0.15);
+  color: #2e7d32;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.milestonePending {
+  background-color: rgba(255, 193, 7, 0.15);
+  color: #f57f17;
+}
+
+.milestoneDescription {
+  color: var(--secondary-text);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.milestoneDueDate {
+  font-size: 0.85rem;
+  color: var(--secondary-text);
+}
+
+/* ===== PDF VIEWER ===== */
+.pdfContainer {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px var(--shadow);
+  border: 1px solid rgba(var(--border-color-rgb), 0.1);
+  margin-bottom: 2rem;
+}
+
+.pdfControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pdfButtonGroup {
+  display: flex;
+  gap: 1rem;
+}
+
+.pdfButton {
+  padding: 0.6rem 1.2rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pdfButton:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.pdfViewer {
+  width: 100%;
+  height: 600px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background-color: #f5f5f5;
+}
+
+:global(.dark-mode) .pdfViewer {
+  background-color: #1a1a1a;
+}
+
+/* ===== PAYMENT TAB ===== */
+.paymentStatus {
+  background: linear-gradient(135deg, var(--primary), rgba(76, 175, 80, 0.7));
+  color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.15);
+}
+
+.paymentStatusTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.paymentStatusItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.paymentStatusItem:last-child {
+  border-bottom: none;
+}
+
+.statusLabel {
+  font-size: 0.95rem;
+}
+
+.statusAmount {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.paymentMethods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.paymentMethod {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 2px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.paymentMethod:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.15);
+}
+
+.paymentMethodIcon {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.paymentMethodName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--foreground);
+  margin-bottom: 0.5rem;
+}
+
+.paymentMethodDesc {
+  font-size: 0.85rem;
+  color: var(--secondary-text);
+}
+
+.payButton {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--primary), rgba(76, 175, 80, 0.8));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+  margin-top: 1.5rem;
+}
+
+.payButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.3);
+}
+
+.payButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===== PAYMENT HISTORY ===== */
+.paymentHistoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.paymentHistoryItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.2rem;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  border-left: 4px solid var(--primary);
+}
+
+.paymentHistoryLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.paymentType {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.paymentDate {
+  font-size: 0.85rem;
+  color: var(--secondary-text);
+}
+
+.paymentHistoryRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.3rem;
+}
+
+.paymentAmount {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.paymentMethod {
+  font-size: 0.85rem;
+  color: var(--secondary-text);
+}
+
+/* ===== NOTES TAB ===== */
+.notesSection {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px var(--shadow);
+  border: 1px solid rgba(var(--border-color-rgb), 0.1);
+}
+
+.notesContent {
+  color: var(--foreground);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.95rem;
+}
+
+/* ===== SUPPORT SECTION ===== */
+.supportSection {
+  background: linear-gradient(135deg, var(--primary), rgba(76, 175, 80, 0.6));
+  color: white;
+  border-radius: 10px;
+  padding: 2.5rem;
+  margin-top: 3rem;
+  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.15);
+}
+
+.supportTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.supportGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.supportItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.supportIcon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.supportInfo {
+  flex: 1;
+}
+
+.supportLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  opacity: 0.9;
+  margin-bottom: 0.3rem;
+}
+
+.supportValue {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    gap: 0.5rem;
+  }
+
+  .headerTitle {
+    width: 100%;
+  }
+
+  .proposalTitle {
+    font-size: 1.4rem;
+  }
+
+  .statusIndicator {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .tabsList {
+    gap: 0;
+  }
+
+  .tab {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .infoSection {
+    padding: 1.5rem;
+  }
+
+  .pdfViewer {
+    height: 400px;
+  }
+
+  .paymentMethods {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .supportGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .milestonesList {
+    gap: 1rem;
+  }
+
+  .milestoneCard {
+    padding: 1.2rem;
+  }
+
+  .paymentStatus {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.8rem;
+  }
+
+  .proposalTitle {
+    font-size: 1.2rem;
+  }
+
+  .sectionTitle {
+    font-size: 1rem;
+  }
+
+  .tab {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .infoSection {
+    padding: 1rem;
+  }
+
+  .pdfViewer {
+    height: 300px;
+  }
+
+  .payButton {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .supportSection {
+    padding: 1.5rem;
+  }
+
+  .totalAmount {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .amountValue {
+    font-size: 1.5rem;
+  }
+}

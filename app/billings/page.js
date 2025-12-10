@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BillingsHero from "./components/BillingsHero";
+import ProposalTracker from "./components/ProposalTracker";
 import PaymentMethods from "./components/PaymentMethods";
 import Invoices from "./components/Invoices";
 import PaymentTerms from "./components/PaymentTerms";
@@ -21,6 +22,7 @@ export default function BillingsPage() {
 
       <div className={styles.pageContent}>
         <BillingsHero />
+        <ProposalTracker />
         <PaymentMethods />
         <Invoices />
         <PaymentTerms />

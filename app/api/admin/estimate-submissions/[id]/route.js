@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 import { executeQuery } from '../../../db.js';
 
 // Fetch a single estimate submission by ID
-export async function GET(request, { params }) {
+export async function GET(request, { params: paramsPromise }) {
   try {
-    const id = params.id;
+    const { id } = await paramsPromise;
     
     if (!id || isNaN(parseInt(id, 10))) {
       return NextResponse.json(
@@ -84,9 +84,9 @@ export async function GET(request, { params }) {
 }
 
 // Update submission status
-export async function PATCH(request, { params }) {
+export async function PATCH(request, { params: paramsPromise }) {
   try {
-    const id = params.id;
+    const { id } = await paramsPromise;
     const data = await request.json();
     
     if (!id || isNaN(parseInt(id, 10))) {
